@@ -9,6 +9,15 @@
   "author": "Onat Arslan",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "event-management-system": "file:",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0"
   }
 }
