@@ -14,7 +14,7 @@ const app = express();
 // Require routers...
 const eventRouter = require(`./routers/eventRouter`);
 
-// Adding neccessary middlewares
+// Using neccessary middlewares(packages)
 app.use(morgan(`combined`)); // http request logger middleware
 app.use(bodyParser.json()); // get data in json format
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,6 +32,7 @@ app.use(
   })
 );
 
+// Using Routers
 app.use(`/api/v1/events`, eventRouter);
 
 app.use(`*`, (req, res, next) => {
