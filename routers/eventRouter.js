@@ -1,9 +1,9 @@
 const express = require("express");
 
+const eventController = require("../controllers/eventController");
+
 const router = express.Router();
 
-router.get(`/`, (req, res, next) => {
-  res.status(400).json({ message: `hello world` });
-});
+router.get(`/`, eventController.getAllEvents);
 
 module.exports = router;
