@@ -9,7 +9,6 @@
   "author": "Onat Arslan",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.18.0",
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -23,7 +22,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.3.0",
-    "prisma": "^5.18.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }
