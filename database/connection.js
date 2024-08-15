@@ -2,7 +2,9 @@ const { env } = require("process");
 const { Sequelize } = require("sequelize");
 
 // Get sequelize instances
-const sequelize = new Sequelize(`${env(`DATABASE_URL`)}`);
+const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
+  logging: false,
+});
 
 // Add neccessary functions (use them in server.js)
 
