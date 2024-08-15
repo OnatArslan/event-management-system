@@ -91,12 +91,15 @@ User.init(
     tableName: `users`,
     timestamps: true,
     paranoid: true,
+    // This default scope for other users try to get user info
     defaultScope: {
-      attributes: { exclude: [`password`] },
+      attributes: {
+        exclude: [`password`],
+      },
     },
     scopes: {
-      withPassword: {
-        attributes: { include: [`password`] },
+      withAll: {
+        attributes: { include: `*` },
       },
     },
     indexes: [
