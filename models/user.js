@@ -72,6 +72,17 @@ User.init(
         },
       },
     },
+    role: {
+      type: DataTypes.ENUM,
+      values: [`user`, `organizer`, `admin`],
+      defaultValue: `user`,
+    },
+    profileInfo: {
+      type: DataTypes.TEXT,
+      defaultValue: function () {
+        return `${this.username} is a new user for eventlab`;
+      },
+    },
   },
   {
     // Options
@@ -88,3 +99,5 @@ User.init(
     ],
   }
 );
+
+module.exports = User;
