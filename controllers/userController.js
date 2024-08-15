@@ -31,3 +31,23 @@ exports.getAllUsers = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.updateUser = async (req, res, next) => {
+  try {
+    const updated = await User.update(req.body, {
+      where: { id: req.params.id },
+      individualHooks: true,
+    });
+    if (!updated) {
+      return next(new Error(`User not found or no changes made!`));
+    }
+    res.status(200).json({
+      status: `success`,
+      data: {
+        user: updated,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

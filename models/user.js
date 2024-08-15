@@ -115,7 +115,15 @@ User.beforeCreate(async (user, options) => {
   const plainPassword = user.password;
   const hashedPassword = await bcrypt.hash(plainPassword, 12);
   user.password = hashedPassword;
-  user.save({ validate: false });
+  // user.save({ validate: false });
+});
+
+User.beforeUpdate(async (user, options) => {
+  if (user.changed(`password`)) {
+    const plainPassword = user.password;
+    const hashedPassword = await bcrypt.hash(plainPassword, 12);
+    user.password = hashedPassword;
+  }
 });
 
 module.exports = User;
