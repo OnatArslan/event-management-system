@@ -2,8 +2,15 @@ const dotenv = require("dotenv");
 dotenv.config();
 const http = require("http");
 const app = require(`./app`);
-const { testConnection, syncDatabase } = require(`./database/connection`);
-const sequelize = require(`./database/connection`);
+
+// Define models here on models/index.js
+const { User } = require(`./models/index`);
+
+const {
+  testConnection,
+  syncDatabase,
+  sequelize,
+} = require(`./database/connection`);
 
 // Test Database connection and server here
 // Actually this block of code is neccessary for server and database connection

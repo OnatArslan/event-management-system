@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes, Model } = require(`sequelize`);
 const { sequelize } = require(`../database/connection`);
 
+const bcrypt = require("bcrypt");
+
 class User extends Model {}
 
 User.init(
@@ -79,9 +81,7 @@ User.init(
     },
     profileInfo: {
       type: DataTypes.TEXT,
-      defaultValue: function () {
-        return `${this.username} is a new user for eventlab`;
-      },
+      defaultValue: `Fresh user :)`,
     },
   },
   {
@@ -91,6 +91,14 @@ User.init(
     tableName: `users`,
     timestamps: true,
     paranoid: true,
+    defaultScope: {
+      attributes: { exclude: [`password`] },
+    },
+    scopes: {
+      withPassword: {
+        attributes: { include: [`password`] },
+      },
+    },
     indexes: [
       {
         unique: true,
@@ -99,5 +107,12 @@ User.init(
     ],
   }
 );
+
+User.beforeCreate(async (user, options) => {
+  const plainPassword = user.password;
+  const hashedPassword = await bcrypt.hash(plainPassword, 12);
+  user.password = hashedPassword;
+  user.save({ validate: false });
+});
 
 module.exports = User;

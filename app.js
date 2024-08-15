@@ -13,6 +13,7 @@ const app = express();
 
 // Require routers...
 const eventRouter = require(`./routers/eventRouter`);
+const userRouter = require(`./routers/userRouter`);
 
 // Using neccessary middlewares(packages)
 app.use(morgan(`combined`)); // http request logger middleware
@@ -34,6 +35,7 @@ app.use(
 
 // Using Routers
 app.use(`/api/v1/events`, eventRouter);
+app.use(`/api/v1/users`, userRouter);
 
 app.use(`*`, (req, res, next) => {
   res.status(500).json({
