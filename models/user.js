@@ -116,6 +116,7 @@ User.beforeCreate(async (user, options) => {
   const hashedPassword = await bcrypt.hash(plainPassword, 12);
   user.password = hashedPassword;
   // user.save({ validate: false });
+  // This is not neccessary
 });
 
 User.beforeUpdate(async (user, options) => {
