@@ -14,7 +14,7 @@ exports.getAllEvents = async (req, res, next) => {
     // Sorting
     let sortOptions = {};
     if (sort) {
-      const [field, order = `ASC`] = sort.split(`,`);
+      const [field, order = `DESC`] = sort.split(`,`);
       // Validate sort field
       let isLegitField = false;
       for (const [key, value] of Object.entries(Event.getAttributes())) {
@@ -28,7 +28,13 @@ exports.getAllEvents = async (req, res, next) => {
         return next(new Error(`Invalid sort field: ${field}`));
       }
     }
-
+    // Default sort
+    else {
+      sortOptions = {
+        order: [[`title`, `ASC`]],
+      };
+    }
+    // Selecting fields
     const attributesOptions = fields ? { attributes: fields.split(`,`) } : {};
 
     const options = {
