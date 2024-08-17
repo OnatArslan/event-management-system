@@ -49,6 +49,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     status: `fail`,
     message: err.stack,
+    message2: err.message,
   });
 });
 
