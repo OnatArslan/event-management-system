@@ -29,10 +29,10 @@ Event.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    coordinates: {
-      type: DataTypes.GEOMETRY("POINT"),
-      allowNull: true,
-    },
+    // coordinates: {
+    //   type: DataTypes.GEOMETRY("Point"),
+    //   allowNull: true,
+    // },
     date: {
       type: DataTypes.DATE,
       allowNull: true,

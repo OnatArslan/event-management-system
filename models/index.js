@@ -3,6 +3,8 @@ const { sequelize } = require(`../database/connection`);
 
 // Import models here
 const User = require(`./user`);
+const Event = require(`./event`);
 // Add associations here
 
-module.exports = { User, sequelize };
+// Export modules centeral
+module.exports = { User, sequelize, Event };
