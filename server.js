@@ -3,9 +3,6 @@ dotenv.config();
 const http = require("http");
 const app = require(`./app`);
 
-// Define models here on models/index.js
-const { User } = require(`./models/index`);
-
 const {
   testConnection,
   syncDatabase,
