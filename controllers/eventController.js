@@ -2,9 +2,14 @@ const Event = require("../models/event");
 
 exports.getAllEvents = async (req, res, next) => {
   try {
+    const { count, rows } = await Event.findAndCountAll();
+    if (count === 0) {
+      return next(new Error(`Can not find any event`));
+    }
     res.status(200).json({
       status: `success`,
-      data: {},
+      message: `Showing ${count} data on this page`,
+      data: { events: rows },
     });
   } catch (error) {
     next(error);
@@ -24,9 +29,14 @@ exports.getEvent = async (req, res, next) => {
 
 exports.createEvent = async (req, res, next) => {
   try {
+    const event = await Event.create({
+      title: req.body.title,
+      date: Date.now(),
+    });
     res.status(200).json({
       status: `success`,
-      data: {},
+
+      data: { event },
     });
   } catch (error) {
     next(error);
