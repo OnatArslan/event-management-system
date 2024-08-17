@@ -18,9 +18,12 @@ exports.getAllEvents = async (req, res, next) => {
 
 exports.getEvent = async (req, res, next) => {
   try {
+    const event = await Event.findByPk(req.params.eventId);
     res.status(200).json({
       status: `success`,
-      data: {},
+      data: {
+        event,
+      },
     });
   } catch (error) {
     next(error);
