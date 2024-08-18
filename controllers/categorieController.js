@@ -40,7 +40,7 @@ exports.getCategorieAndEvents = async (req, res, next) => {
     const categorie = await Categorie.findByPk(req.params.categorieId, {
       include: {
         model: Event,
-        as: `events`,
+        as: `categorizedEvents`,
       },
     });
     if (!categorie) {
