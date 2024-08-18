@@ -10,7 +10,11 @@ const Categorie = require(`./categorie`);
 
 // User and Event releationship
 Event.belongsTo(User, { foreignKey: `organizerId`, as: `organizer` });
-User.hasMany(Event, { foreignKey: `organizerId`, as: `events` });
+User.hasMany(Event, {
+  foreignKey: `organizerId`,
+  as: `events`,
+  onDelete: `CASCADE`,
+});
 
 // Event and Categorie
 Event.belongsTo(Categorie, { foreignKey: `categorieId`, as: `categorie` });

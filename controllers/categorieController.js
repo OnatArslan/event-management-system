@@ -56,3 +56,21 @@ exports.getCategorieAndEvents = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.deleteCategories = async (req, res, next) => {
+  try {
+    await Categorie.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).json({
+      status: `success`,
+      data: {
+        categorie: categorie,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
