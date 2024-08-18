@@ -59,7 +59,6 @@ Event.init(
     sequelize,
     modelName: `Event`,
     tableName: `events`,
-    paranoid: true,
     timestamps: true,
     indexes: [
       {

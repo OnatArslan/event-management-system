@@ -13,12 +13,20 @@ Event.belongsTo(User, { foreignKey: `organizerId`, as: `organizer` });
 User.hasMany(Event, {
   foreignKey: `organizerId`,
   as: `events`,
-  onDelete: `CASCADE`,
 });
 
 // Event and Categorie
-Event.belongsTo(Categorie, { foreignKey: `categorieId`, as: `categorie` });
-Categorie.hasMany(Event, { foreignKey: `categorieId`, as: `events` });
+Event.belongsTo(Categorie, {
+  foreignKey: `categorieId`,
+  as: `categorie`,
+  onDelete: `CASCADE`,
+});
+
+Categorie.hasMany(Event, {
+  foreignKey: `categorieId`,
+  as: `events`,
+  onDelete: `CASCADE`,
+});
 
 // Export modules centeral
 module.exports = { sequelize, User, Event, Categorie };

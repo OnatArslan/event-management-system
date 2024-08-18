@@ -9,6 +9,9 @@ router
   .get(categorieController.getAllCategories)
   .post(categorieController.createCategorie);
 
-router.route(`/:categorieId`).get(categorieController.getCategorieAndEvents);
+router
+  .route(`/:categorieId`)
+  .get(categorieController.getCategorieAndEvents)
+  .delete(categorieController.deleteCategorie);
 
 module.exports = router;
