@@ -45,10 +45,6 @@ exports.getAllEvents = async (req, res, next) => {
 
     const { count, rows } = await Event.findAndCountAll(options);
 
-    if (count === 0) {
-      return next(new Error("Cannot find any event"));
-    }
-
     res.status(200).json({
       status: "success",
       message: `Showing ${count} data on this page`,

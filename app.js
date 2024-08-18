@@ -37,7 +37,7 @@ app.use(
 // Using Routers
 app.use(`/api/v1/events`, eventRouter);
 app.use(`/api/v1/users`, userRouter);
-app.use(`api/v1/categories`, categorieRouter);
+app.use(`/api/v1/categories`, categorieRouter);
 
 app.use(`*`, (req, res, next) => {
   res.status(500).json({

@@ -4,6 +4,6 @@ const categorieController = require(`../controllers/categorieController`);
 
 const router = express.Router({ mergeParams: true });
 
-router.route(`/`).get();
+router.route(`/`).get(categorieController.getAllCategories);
 
 module.exports = router;
