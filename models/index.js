@@ -5,6 +5,8 @@ const { sequelize } = require(`../database/connection`);
 const User = require(`./user`);
 const Event = require(`./event`);
 const Categorie = require(`./categorie`);
+const Review = require(`./review`);
+const Comment = require(`./comment`);
 
 // Add associations here
 
