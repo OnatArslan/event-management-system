@@ -16,10 +16,12 @@ Comment.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    // Foreign key for user
     userId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
+    // Foreign key for events
     eventId: {
       type: DataTypes.UUID,
       allowNull: false,
