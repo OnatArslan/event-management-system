@@ -13,7 +13,7 @@ Event.belongsTo(User, { foreignKey: `organizerId`, as: `organizer` });
 User.hasMany(Event, { foreignKey: `organizerId`, as: `events` });
 
 // Event and Categorie
-Event.belongsTo(Event, { foreignKey: `categorieId`, as: `categorie` });
+Event.belongsTo(Categorie, { foreignKey: `categorieId`, as: `categorie` });
 Categorie.hasMany(Event, { foreignKey: `categorieId`, as: `events` });
 
 // Export modules centeral

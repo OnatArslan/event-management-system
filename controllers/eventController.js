@@ -73,7 +73,9 @@ exports.createEvent = async (req, res, next) => {
   try {
     const event = await Event.create({
       title: req.body.title,
-      date: Date.now(),
+      date: req.body.date,
+      categorieId: req.body.categorieId,
+      organizerId: req.body.organizerId,
     });
     res.status(200).json({
       status: `success`,

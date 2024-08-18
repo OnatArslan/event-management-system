@@ -47,11 +47,11 @@ Event.init(
     },
     // Foreign keys
     categorieId: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       allowNull: false,
     },
     organizerId: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       allowNull: false,
     },
   },

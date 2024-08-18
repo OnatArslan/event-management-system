@@ -1,4 +1,4 @@
-const { Categorie } = require(`../models/index`);
+const { Categorie, Event } = require(`../models/index`);
 
 exports.getAllCategories = async (req, res, next) => {
   try {
@@ -24,6 +24,28 @@ exports.createCategorie = async (req, res, next) => {
       return next(new Error(`Creatin failed please try again!`));
     }
 
+    res.status(200).json({
+      status: `success`,
+      data: {
+        categorie: categorie,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getCategorieAndEvents = async (req, res, next) => {
+  try {
+    const categorie = await Categorie.findByPk(req.params.categorieId, {
+      include: {
+        model: Event,
+        as: `events`,
+      },
+    });
+    if (!categorie) {
+      return next(new Error(`This categorie does not exist!`));
+    }
     res.status(200).json({
       status: `success`,
       data: {
