@@ -2,7 +2,13 @@ const express = require("express");
 
 const eventController = require("../controllers/eventController");
 
+const commentRouter = require(`./commentRouter`);
+const reviewRouter = require(`./reviewRouter`);
+
 const router = express.Router();
+
+router.use(`/:eventId/comments`, commentRouter);
+router.use(`/:eventId/reviews`, reviewRouter);
 
 router
   .route(`/`)
