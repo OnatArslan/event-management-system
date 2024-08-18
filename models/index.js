@@ -8,7 +8,7 @@ const Categorie = require(`./categorie`);
 
 // Add associations here
 
-// User and Event releationship
+// User and Event Organizer releationship
 Event.belongsTo(User, { foreignKey: `organizerId`, as: `organizer` });
 User.hasMany(Event, {
   foreignKey: `organizerId`,
