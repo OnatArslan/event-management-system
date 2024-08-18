@@ -60,6 +60,7 @@ Event.init(
     modelName: `Event`,
     tableName: `events`,
     timestamps: true,
+    paranoid: true,
     indexes: [
       {
         unique: true,
