@@ -45,6 +45,15 @@ Event.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    // Foreign keys
+    categorieId: {
+      type: DataTypes.UUIDV4,
+      allowNull: false,
+    },
+    organizerId: {
+      type: DataTypes.UUIDV4,
+      allowNull: false,
+    },
   },
   {
     sequelize,
