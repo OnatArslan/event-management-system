@@ -10,11 +10,23 @@ const Comment = require(`./comment`);
 
 // Add associations here
 
-// User and Event Organizer releationship
+// User and Event Organizer releationship (One to Many)
 Event.belongsTo(User, { foreignKey: `organizerId`, as: `organizer` });
 User.hasMany(Event, {
   foreignKey: `organizerId`,
   as: `events`,
+});
+
+// User and Comment releationship (One to Many)
+Comment.belongsTo(User, {
+  foreignKey: `userId`,
+  as: `owner`,
+  onDelete: `CASCADE`,
+});
+User.hasMany(Comment, {
+  foreignKey: `userId`,
+  as: `comments`,
+  onDelete: `CASCADE`,
 });
 
 // Event and Categorie

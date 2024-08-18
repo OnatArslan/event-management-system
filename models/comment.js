@@ -26,6 +26,7 @@ Comment.init(
     },
     parentCommentId: {
       type: DataTypes.UUID,
+      allowNull: true,
     },
   },
   {
