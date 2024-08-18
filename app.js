@@ -47,7 +47,7 @@ app.use(`*`, (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err.stack);
+  console.log(err);
   res.status(500).json({
     status: `fail`,
     message: err.stack,
