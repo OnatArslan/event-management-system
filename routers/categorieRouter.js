@@ -12,6 +12,7 @@ router
 router
   .route(`/:categorieId`)
   .get(categorieController.getCategorieAndEvents)
-  .delete(categorieController.deleteCategorie);
+  .delete(categorieController.deleteCategorie)
+  .patch(categorieController.updateCategorie);
 
 module.exports = router;

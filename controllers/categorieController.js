@@ -57,6 +57,22 @@ exports.getCategorieAndEvents = async (req, res, next) => {
   }
 };
 
+exports.updateCategorie = async (req, res, next) => {
+  try {
+    await Categorie.update(req.body, {
+      where: {
+        id: req.params.categorieId,
+      },
+    });
+    res.status(200).json({
+      status: `success`,
+      message: `Categorie updated successfully`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.deleteCategorie = async (req, res, next) => {
   try {
     await Categorie.destroy({
