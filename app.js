@@ -8,6 +8,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const passport = require("passport");
 // Define app
 const app = express();
 
@@ -37,6 +38,9 @@ app.use(
     },
   })
 );
+// Auth package
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Using Routers
 app.use(`/api/v1/events`, eventRouter);
