@@ -3,6 +3,12 @@ const { Strategy } = require("passport-local");
 const { User } = require(`../models/index`);
 const bcrypt = require("bcrypt");
 
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {});
+
 exports.strategy = passport.use(
   new Strategy({ usernameField: `email` }, async (username, password, done) => {
     try {
