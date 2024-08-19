@@ -4,10 +4,22 @@ const { User } = require(`../models/index`);
 const bcrypt = require("bcrypt");
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  console.log(`Inside serialize user function`);
+
+  done(null, user.id);
 });
 
-passport.deserializeUser((user, done) => {});
+passport.deserializeUser(async (id, done) => {
+  try {
+    const findUser = await User.scope(`withAll`).findByPk(id);
+    if (!findUser) throw new Error(`User not found`);
+    console.log(`Inside deserialize user function`);
+
+    done(null, findUser);
+  } catch (err) {
+    done(err, null);
+  }
+});
 
 exports.strategy = passport.use(
   new Strategy({ usernameField: `email` }, async (username, password, done) => {
@@ -20,12 +32,11 @@ exports.strategy = passport.use(
       }
       console.log(password, findUser.password);
 
-      bcrypt.compare(password, findUser.password).then((result) => {
-        if (!result) {
-          throw new Error(`Invalid credentials`);
-        }
-      });
+      const match = await bcrypt.compare(password, findUser.password);
 
+      if (!match) {
+        throw new Error(`Invalid credentials`);
+      }
       return done(null, findUser);
     } catch (err) {
       return done(err, null);
