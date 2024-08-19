@@ -8,6 +8,7 @@ exports.getAllCategories = async (req, res, next) => {
       status: `success`,
       message: `Showing ${count} categories on this page`,
       data: {
+        session: req.session.id,
         categories: rows,
       },
     });

@@ -25,12 +25,13 @@ app.use(helmet()); // Secure app
 app.use(compression()); // Data compression for performance gain
 app.use(cookieParser());
 
+// Session can not below the app.use(routers)
 app.use(
   session({
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
+    cookie: { secure: true, maxAge: 60000 * 60 * 24 },
   })
 );
 
