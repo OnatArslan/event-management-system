@@ -9,12 +9,14 @@ const compression = require("compression");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
+const localStrategy = require(`./strategies/local-strategy`);
 // Define app
 const app = express();
 
 // Require routers...
 const eventRouter = require(`./routers/eventRouter`);
 const userRouter = require(`./routers/userRouter`);
+const authRouter = require(`./routers/authRouter`);
 const categorieRouter = require(`./routers/categorieRouter`);
 
 // Using neccessary middlewares(packages)
@@ -46,6 +48,7 @@ app.use(passport.session());
 app.use(`/api/v1/events`, eventRouter);
 app.use(`/api/v1/users`, userRouter);
 app.use(`/api/v1/categories`, categorieRouter);
+app.use(`/api/v1/auth`, authRouter);
 
 app.use(`*`, (req, res, next) => {
   res.status(500).json({
