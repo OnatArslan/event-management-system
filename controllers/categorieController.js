@@ -4,11 +4,14 @@ exports.getAllCategories = async (req, res, next) => {
   try {
     const { count, rows } = await Categorie.findAndCountAll();
 
+    req.session.visited = true;
+
     res.status(200).json({
       status: `success`,
       message: `Showing ${count} categories on this page`,
       data: {
-        session: req.session.id,
+        session: req.session,
+        sessionId: req.session.id,
         categories: rows,
       },
     });

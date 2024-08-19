@@ -20,7 +20,7 @@ const categorieRouter = require(`./routers/categorieRouter`);
 app.use(morgan(`combined`)); // http request logger middleware
 app.use(bodyParser.json()); // get data in json format
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors()); // Allow all domains
+app.use(cors({ credentials: true, origin: true })); // Allow all domains
 app.use(helmet()); // Secure app
 app.use(compression()); // Data compression for performance gain
 app.use(cookieParser());
@@ -29,9 +29,12 @@ app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_KEY,
-    resave: false,
     saveUninitialized: false,
-    cookie: { secure: true, maxAge: 60000 * 60 * 24 },
+    resave: true,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60000 * 60 * 24,
+    },
   })
 );
 
