@@ -30,7 +30,6 @@ exports.strategy = passport.use(
       if (!findUser) {
         throw new Error(`User not found`);
       }
-      console.log(password, findUser.password);
 
       const match = await bcrypt.compare(password, findUser.password);
 
