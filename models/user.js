@@ -62,6 +62,11 @@ User.init(
         },
       },
     },
+    passwordChangedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Date.now(),
+    },
     passwordConfirmation: {
       type: DataTypes.VIRTUAL,
       allowNull: false,
@@ -123,6 +128,7 @@ User.beforeUpdate(async (user, options) => {
     const plainPassword = user.password;
     const hashedPassword = await bcrypt.hash(plainPassword, 12);
     user.password = hashedPassword;
+    user.passwordChangedAt = Date.now();
   }
 });
 

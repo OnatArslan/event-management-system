@@ -81,3 +81,21 @@ exports.signIn = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.logOut = (req, res, next) => {
+  try {
+    // Clear the token cookie
+    res.cookie("token", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      expires: new Date(0), // Set the cookie to expire immediately
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "Logged out successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
