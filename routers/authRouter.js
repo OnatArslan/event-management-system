@@ -1,10 +1,7 @@
 const express = require("express");
 const authController = require("../controllers/authController");
 const router = express.Router();
-const passport = require("passport");
 
-router
-  .route(`/login`)
-  .get(passport.authenticate(`local`), authController.login);
+router.route(`/login`).get(authController.login);
 
 module.exports = router;
