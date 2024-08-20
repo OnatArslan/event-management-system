@@ -8,7 +8,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-
+const rateLimit = require(`express-rate-limit`);
 // Define app
 const app = express();
 
@@ -26,6 +26,15 @@ app.use(cors({ credentials: true, origin: true })); // Allow all domains
 app.use(helmet()); // Secure app
 app.use(compression()); // Data compression for performance gain
 app.use(cookieParser());
+
+// This will block a user if they make more than 100 requests in 15 minutes
+// Using express-rate-limit to avoid brute force attacks
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: `Too many request from this IP,please try again after 15 minutes`,
+});
+app.use(limiter);
 
 // Session can not below the app.use(routers)
 app.use(
