@@ -41,9 +41,15 @@ exports.protect = async (req, res, next) => {
 
 exports.restrict = (roles) => {
   return (req, res, next) => {
+    // This is not neccessary but for one reason our protect middleware was broken this statament could save the day :)
+    if (!req.user || !req.user.role) {
+      return next(new Error(`User role is not defined`));
+    }
+    // Check if the user's role is included in the allowed roles
     if (!roles.includes(req.user.role)) {
       return next(new Error(`Only ${roles} can access this route`));
     }
+    // Proceed to the next middleware or route handler
     next();
   };
 };

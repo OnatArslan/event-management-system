@@ -9,7 +9,7 @@ router
   .route(`/`)
   .get(
     authMiddleware.protect,
-    authMiddleware.restrict([`admin`, `organizer`]),
+    authMiddleware.restrict([`admin`, `organizer`, `user`]),
     categorieController.getAllCategories
   )
   .post(categorieController.createCategorie);
