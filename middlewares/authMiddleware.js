@@ -38,3 +38,12 @@ exports.protect = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.restrict = (roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new Error(`Only ${roles} can access this route`));
+    }
+    next();
+  };
+};
