@@ -81,16 +81,26 @@ exports.getEvent = async (req, res, next) => {
 
 exports.createEvent = async (req, res, next) => {
   try {
-    const event = await Event.create({
-      title: req.body.title,
-      date: req.body.date,
-      categorieId: req.body.categorieId,
-      organizerId: req.body.organizerId,
+    const { title, description, location, date, time, image, categorieId } =
+      req.body;
+
+    const newEvent = await Event.create({
+      title,
+      description,
+      location,
+      date,
+      time,
+      image,
+      categorieId,
+      organizerId: req.user.id,
     });
+    if (!newEvent) {
+      return next(new Error(`Event not created!`));
+    }
     res.status(200).json({
       status: `success`,
-
-      data: { event },
+      message: `${newEvent.title} created successfully`,
+      data: { newEvent },
     });
   } catch (error) {
     next(error);
