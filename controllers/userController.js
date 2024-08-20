@@ -2,7 +2,15 @@ const { User } = require(`../models/index`);
 
 exports.createUser = async (req, res, next) => {
   try {
-    const user = await User.create(req.body);
+    const { username, email, password, passwordConfirmation, role } = req.body;
+    const user = await User.create({
+      username,
+      email,
+      password,
+      passwordConfirmation,
+      role,
+    });
+
     if (!user) {
       return next(new Error(`Can not create user`));
     }
