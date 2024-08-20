@@ -1,11 +1,13 @@
 const express = require("express");
 const categorieController = require(`../controllers/categorieController`);
 
+const authMiddleware = require(`../middlewares/authMiddleware`);
+
 const router = express.Router({ mergeParams: true });
 
 router
   .route(`/`)
-  .get(categorieController.getAllCategories)
+  .get(authMiddleware.auth, categorieController.getAllCategories)
   .post(categorieController.createCategorie);
 
 router
