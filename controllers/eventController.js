@@ -1,4 +1,4 @@
-const { Event } = require("../models/index");
+const { Event, User } = require("../models/index");
 
 exports.getAllEvents = async (req, res, next) => {
   try {
@@ -43,7 +43,16 @@ exports.getAllEvents = async (req, res, next) => {
       ...attributesOptions,
     };
 
-    const { count, rows } = await Event.findAndCountAll(options);
+    const { count, rows } = await Event.findAndCountAll({
+      ...sortOptions,
+      ...paginationOptions,
+      ...attributesOptions,
+      include: {
+        model: User,
+        as: `organizer`,
+        attributes: [`username`, `email`],
+      },
+    });
 
     res.status(200).json({
       status: "success",
@@ -58,6 +67,7 @@ exports.getAllEvents = async (req, res, next) => {
 exports.getEvent = async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.eventId);
+
     res.status(200).json({
       status: `success`,
       data: {
