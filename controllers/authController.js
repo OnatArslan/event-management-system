@@ -63,9 +63,19 @@ exports.signIn = async (req, res, next) => {
       return next(new Error(`Invalid credentials`));
     }
     // If everything is correct, create the JWT token.
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: `2 days`,
+    });
+    // Send token via cookie
+    res.cookie(`token`, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
+    });
 
     res.status(200).json({
-      data: `hello`,
+      status: `success`,
+      message: `${user.username} is logged in successfully`,
     });
   } catch (err) {
     next(err);
