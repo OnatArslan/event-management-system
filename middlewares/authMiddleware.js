@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { User } = require(`../models/index`);
 
-exports.auth = async (req, res, next) => {
+exports.protect = async (req, res, next) => {
   try {
     // Extract token from cookies
     const token = req.cookies.token;

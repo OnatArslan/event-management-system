@@ -7,7 +7,7 @@ const router = express.Router({ mergeParams: true });
 
 router
   .route(`/`)
-  .get(authMiddleware.auth, categorieController.getAllCategories)
+  .get(categorieController.getAllCategories)
   .post(categorieController.createCategorie);
 
 router
