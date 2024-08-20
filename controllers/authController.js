@@ -52,7 +52,7 @@ exports.signIn = async (req, res, next) => {
     const user = await User.scope(`withAll`).findOne({
       where: { email: email },
     });
-    // If user with given email is not found return Error
+    // If user with given email is not found return Error.
     if (!user) {
       return next(new Error(`User not found`));
     }
@@ -62,7 +62,7 @@ exports.signIn = async (req, res, next) => {
     if (!match) {
       return next(new Error(`Invalid credentials`));
     }
-    console.log(`Hello world`);
+    // If everything is correct, create the JWT token.
 
     res.status(200).json({
       data: `hello`,
