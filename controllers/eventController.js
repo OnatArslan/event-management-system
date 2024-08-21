@@ -42,7 +42,7 @@ exports.getAllEvents = async (req, res, next) => {
       ...paginationOptions,
       ...attributesOptions,
     };
-
+    // give pagination sort and attributes in options field
     const { count, rows } = await Event.findAndCountAll({
       ...sortOptions,
       ...paginationOptions,
