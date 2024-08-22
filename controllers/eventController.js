@@ -47,6 +47,9 @@ exports.getAllEvents = async (req, res, next) => {
       ...sortOptions,
       ...paginationOptions,
       ...attributesOptions,
+      attributes: {
+        exclude: [`categorieId`, `organizerId`, `deletedAt`],
+      },
       include: {
         model: User,
         as: `organizer`,
@@ -59,8 +62,8 @@ exports.getAllEvents = async (req, res, next) => {
       message: `Showing ${count} data on this page`,
       data: { events: rows },
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
