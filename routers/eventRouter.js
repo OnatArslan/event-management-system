@@ -5,6 +5,7 @@ const eventController = require("../controllers/eventController");
 // Import routers
 const commentRouter = require(`./commentRouter`);
 const reviewRouter = require(`./reviewRouter`);
+const nestedCommentRouter = require(`./nestedCommentRouter`);
 
 // Import auth middlewares
 const auth = require(`../middlewares/authMiddleware`);
@@ -13,7 +14,7 @@ const router = express.Router();
 
 router.use(`/:eventId/comments`, commentRouter);
 router.use(`/:eventId/reviews`, reviewRouter);
-
+router.use(`/:eventId/comments/:commentId`, nestedCommentRouter);
 // These router do not have auth validation
 router.route(`/`).get(eventController.getAllEvents);
 router.route(`/:eventId`).get(eventController.getEvent);
