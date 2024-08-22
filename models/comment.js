@@ -25,6 +25,7 @@ Comment.init(
     eventId: {
       type: DataTypes.UUID,
       allowNull: false,
+      // Foreign key for comments
     },
     parentCommentId: {
       type: DataTypes.UUID,
