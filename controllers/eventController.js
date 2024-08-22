@@ -106,7 +106,6 @@ exports.createEvent = async (req, res, next) => {
   try {
     const { title, description, location, date, time, image, categorieId } =
       req.body;
-
     const newEvent = await Event.create({
       title,
       description,
@@ -132,21 +131,15 @@ exports.createEvent = async (req, res, next) => {
 
 exports.updateEvent = async (req, res, next) => {
   try {
-    await Event.update(
-      {
-        title: req.body.title,
-        date: new Date(`2024-11-29`),
+    await Event.update(req.body, {
+      where: {
+        id: req.params.eventId,
       },
-      {
-        where: {
-          id: req.params.eventId,
-        },
-      }
-    );
+    });
 
     res.status(200).json({
       status: `success`,
-      data: {},
+      message: `Event updated successfully`,
     });
   } catch (err) {
     next(err);
@@ -164,7 +157,7 @@ exports.deleteEvent = async (req, res, next) => {
     });
     res.status(200).json({
       status: `success`,
-      data: {},
+      message: `Event deleted successfully`,
     });
   } catch (err) {
     next(err);
