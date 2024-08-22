@@ -1,4 +1,4 @@
-const { Event, User } = require("../models/index");
+const { Event, User, Review, Comment } = require("../models/index");
 
 exports.getAllEvents = async (req, res, next) => {
   try {
@@ -69,7 +69,27 @@ exports.getAllEvents = async (req, res, next) => {
 
 exports.getEvent = async (req, res, next) => {
   try {
-    const event = await Event.findByPk(req.params.eventId);
+    const event = await Event.findByPk(req.params.eventId, {
+      include: [
+        {
+          model: User,
+          as: `organizer`,
+          attributes: [`username`, `email`],
+        },
+        {
+          model: Review,
+          as: `eventReviews`,
+        },
+        {
+          model: Comment,
+          as: `eventComments`,
+        },
+      ],
+
+      attributes: {
+        exclude: [`categorieId`, `organizerId`, `deletedAt`],
+      },
+    });
 
     res.status(200).json({
       status: `success`,
@@ -77,8 +97,8 @@ exports.getEvent = async (req, res, next) => {
         event,
       },
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -98,15 +118,15 @@ exports.createEvent = async (req, res, next) => {
       organizerId: req.user.id,
     });
     if (!newEvent) {
-      return next(new Error(`Event not created!`));
+      return next(new Error(`Event can not created!`));
     }
     res.status(200).json({
       status: `success`,
       message: `${newEvent.title} created successfully`,
       data: { newEvent },
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -128,8 +148,8 @@ exports.updateEvent = async (req, res, next) => {
       status: `success`,
       data: {},
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -146,7 +166,7 @@ exports.deleteEvent = async (req, res, next) => {
       status: `success`,
       data: {},
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
