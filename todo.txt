@@ -1,0 +1,10 @@
+1. Handle event controller (not include other models fields)
+2. Handle review controller (include review calculation on event model)
+3. Handle comment controller (event-review releationship)
+4. Handle comment controller (comment-comment releationship)
+5. 
+6. 
+7. 
+8. 
+9. 
+10. 
