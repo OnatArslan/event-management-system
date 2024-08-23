@@ -105,6 +105,7 @@ exports.logOut = (req, res, next) => {
 
 // --------------------------------------Profile
 // getMe -> Get my Profile Info
+// Update me -> (password not included)
 // Follow user
 // Unfollow user
 // Get followers
