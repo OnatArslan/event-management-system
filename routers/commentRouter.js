@@ -36,6 +36,9 @@ module.exports = router;
 // / route go for this
 // v1/events/:eventId/comments
 // /comments
+// /comments
+// /comments
+// /comments
 
 // /:commentId go for this
 // v1/events/:eventId/comments/:commentId
