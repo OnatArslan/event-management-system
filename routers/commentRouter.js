@@ -10,7 +10,7 @@ const nestedCommentController = require(`../controllers/nestedCommentController`
 // all routes in this route like api/v1/events/:eventId/comments/:commentId format
 const router = express.Router({ mergeParams: true });
 
-// this route is for 127.0.0.1:3000/api/v1/events/:eventId/omments
+// this route is for 127.0.0.1:3000/api/v1/events/:eventId/comments
 router.route(`/`).get(commentController.getAllEventComments); // Get all comment of given event
 router.route(`/:commentId`).get(); // Get one comment with given Id
 

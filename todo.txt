@@ -3,8 +3,8 @@
 3. Handle comment controller (event-review releationship)
 4. Handle comment controller (comment-comment releationship)
 5. ROUTERs------
-6. 
-7. 
+6. Add Friendship controllers and routers
+7. Add Chat function with friends
 8. 
 9. 
 10. 
