@@ -62,10 +62,39 @@ exports.updateChildComment = async (req, res, next) => {
   try {
     const { content } = req.body;
     const childId = req.params.replieId;
-
+    const childComment = await Comment.findByPk(childId);
+    if (!childComment) {
+      return next(new Error(`Can not find replie`));
+    }
+    if (childComment.userId !== req.user.id) {
+      return next(new Error(`Can not update other user's comment!!`));
+    }
+    await childComment.update({ content: content });
     res.status(200).json({
       status: `success`,
-      message: `Replie with : ${child.id} : is updated`,
+      data: {
+        childComment,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteChildComment = async (req, res, next) => {
+  try {
+    const { content } = req.body;
+    const childId = req.params.replieId;
+    await Comment.update(
+      { content: content },
+      {
+        where: { id: childId },
+        validate: true,
+      }
+    );
+    res.status(200).json({
+      status: `success`,
+      message: `Replie  is updated`,
     });
   } catch (err) {
     next(err);
