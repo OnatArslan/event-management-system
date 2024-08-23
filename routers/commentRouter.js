@@ -29,6 +29,6 @@ router
 router
   .route(`/:commentId/replies/:replieId`)
   .patch(authMiddleware.protect, nestedCommentController.updateChildComment)
-  .delete(authMiddleware.protect);
+  .delete(authMiddleware.protect, nestedCommentController.deleteChildComment);
 
 module.exports = router;

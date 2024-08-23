@@ -85,16 +85,17 @@ exports.deleteChildComment = async (req, res, next) => {
   try {
     const { content } = req.body;
     const childId = req.params.replieId;
-    await Comment.update(
-      { content: content },
-      {
-        where: { id: childId },
-        validate: true,
-      }
-    );
+    const childComment = await Comment.findByPk(childId);
+    if (!childComment) {
+      return next(new Error(`Can not find replie`));
+    }
+    if (childComment.userId !== req.user.id) {
+      return next(new Error(`Can not delete other user's comment!!`));
+    }
+    await childComment.destroy();
     res.status(200).json({
       status: `success`,
-      message: `Replie  is updated`,
+      message: `Replie  is deleted successfully`,
     });
   } catch (err) {
     next(err);
