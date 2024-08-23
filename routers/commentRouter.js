@@ -21,6 +21,6 @@ router
   .route(`/:commentId`)
   .patch(commentController.updateCommentOnEvent)
   .delete(commentController.deleteCommentOnEvent)
-  .post();
-
+  .post(nestedCommentController.createChildComment)
+  .get(nestedCommentController.getAllChildComments);
 module.exports = router;
