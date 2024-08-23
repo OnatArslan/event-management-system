@@ -2,6 +2,7 @@ const { User } = require("../models/index");
 const jwt = require("jsonwebtoken");
 const bcrypt = require(`bcrypt`);
 
+// Auth-------------------------------------
 exports.signUp = async (req, res, next) => {
   try {
     const { username, email, password, passwordConfirmation, profileInfo } =
@@ -99,3 +100,12 @@ exports.logOut = (req, res, next) => {
     next(err);
   }
 };
+
+// Change password(most important)
+
+// --------------------------------------Profile
+// getMe -> Get my Profile Info
+// Follow user
+// Unfollow user
+// Get followers
+// Get followings
