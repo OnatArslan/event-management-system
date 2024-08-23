@@ -30,3 +30,13 @@ router
   .get(nestedCommentController.getAllChildComments);
 
 module.exports = router;
+
+// this route is for 127.0.0.1:3000/api/v1/events/:eventId/comments
+
+// / route go for this
+// v1/events/:eventId/comments
+// /comments
+
+// /:commentId go for this
+// v1/events/:eventId/comments/:commentId
+// /comments/:commentId
