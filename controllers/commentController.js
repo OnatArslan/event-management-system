@@ -27,6 +27,23 @@ exports.getAllEventComments = async (req, res, next) => {
   }
 };
 
+exports.getEventComment = async (req, res, next) => {
+  try {
+    const comment = await Comment.findByPk(req.params.commentId, {
+      include: { model: Comment, as: `replies` },
+    });
+    if (!comment) {
+      return next(new Error(`Can not find any comment on database`));
+    }
+    res.status(200).json({
+      status: `success`,
+      data: { comment },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.createCommentOnEvent = async (req, res, next) => {
   try {
     const { content } = req.body;

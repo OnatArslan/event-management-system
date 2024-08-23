@@ -5,42 +5,25 @@ const authMiddleware = require(`../middlewares/authMiddleware`);
 const commentController = require(`../controllers/commentController`);
 const nestedCommentController = require(`../controllers/nestedCommentController`);
 
-// Because of reviews must have event I will use nested routes
-// mergeParams:true option for this
-// all routes in this route like api/v1/events/:eventId/comments/:commentId format
+// Create a router with mergeParams to handle nested routes
 const router = express.Router({ mergeParams: true });
 
-// this route is for 127.0.0.1:3000/api/v1/events/:eventId/comments
-router.route(`/`).get(commentController.getAllEventComments); // Get all comment of given event
-router.route(`/:commentId`).get(); // Get one comment with given Id
+// Routes for comments on events (reviews)
+router
+  .route(`/`)
+  .get(commentController.getAllEventComments) // Get all comments for a given event
+  .post(authMiddleware.protect, commentController.createCommentOnEvent); // Create a comment on an event
 
-router.use(authMiddleware.protect);
-
-// This is for /events/:eventId/comments/:commentId
-router.route(`/`).post(commentController.createCommentOnEvent); // create comment on event
 router
   .route(`/:commentId`)
-  .patch(commentController.updateCommentOnEvent)
-  .delete(commentController.deleteCommentOnEvent);
+  .get(commentController.getEventComment) // Get a specific comment by ID
+  .patch(authMiddleware.protect, commentController.updateCommentOnEvent) // Update a comment on an event
+  .delete(authMiddleware.protect, commentController.deleteCommentOnEvent); // Delete a comment on an event
 
-// Nested comments for /comments/:commentId
+// Routes for nested comments (replies to comments)
 router
-  .route(`/:commentId`)
-  .post(nestedCommentController.createChildComment)
-  .get(nestedCommentController.getAllChildComments);
+  .route(`/:commentId/replies`)
+  .post(authMiddleware.protect, nestedCommentController.createChildComment) // Create a reply to a comment
+  .get(nestedCommentController.getAllChildComments); // Get all replies to a specific comment
 
 module.exports = router;
-
-// this route is for 127.0.0.1:3000/api/v1/events/:eventId/comments
-
-// / route go for this
-// v1/events/:eventId/comments
-// /comments
-// /comments
-// /comments
-// /comments
-
-// /:commentId go for this
-// v1/events/:eventId/comments/:commentId
-// /comments/:commentId
-// /comments/:commentId
