@@ -1,6 +1,9 @@
 const express = require("express");
 
+const authMiddleware = require(`../middlewares/authMiddleware`);
+
 const commentController = require(`../controllers/commentController`);
+const nestedCommentController = require(`../controllers/nestedCommentController`);
 
 // Because of reviews must have event I will use nested routes
 // mergeParams:true option for this
@@ -8,11 +11,16 @@ const commentController = require(`../controllers/commentController`);
 const router = express.Router({ mergeParams: true });
 
 // this route is for 127.0.0.1:3000/api/v1/events/:eventId/omments
-router.route(`/`).get(commentController.getAllComments); // Get all comment of given event
+router.route(`/`).get(commentController.getAllEventComments); // Get all comment of given event
 router.route(`/:commentId`).get(); // Get one comment with given Id
 
-router.route(`/`).post(commentController.createComment); // create comment on event
+router.use(authMiddleware.protect);
 
-router.route(`/:commentId`).patch().delete();
+router.route(`/`).post(commentController.createCommentOnEvent); // create comment on event
+router
+  .route(`/:commentId`)
+  .patch(commentController.updateCommentOnEvent)
+  .delete(commentController.deleteCommentOnEvent)
+  .post();
 
 module.exports = router;
