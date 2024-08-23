@@ -98,3 +98,24 @@ exports.updateReview = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteReview = async (req, res, next) => {
+  try {
+    const review = await Review.findByPk(req.params.reviewId);
+    if (!review) {
+      return next(new Error(`Can not find a review with given ID`));
+    }
+    if (review.userId !== req.user.id) {
+      return next(new Error(`You can only delete your reviews`));
+    }
+    await review.destroy({
+      force: true,
+    });
+    res.status(200).json({
+      status: `success`,
+      message: `Review successfully deleted`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

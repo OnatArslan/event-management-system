@@ -18,5 +18,10 @@ router.use(
 );
 // Protected routes
 router.route(`/`).post(reviewController.createReview);
-router.route(`/:reviewId`).patch(reviewController.updateReview);
+
+router
+  .route(`/:reviewId`)
+  .patch(reviewController.updateReview)
+  .delete(reviewController.deleteReview);
+
 module.exports = router;
