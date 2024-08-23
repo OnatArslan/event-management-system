@@ -23,7 +23,7 @@ router
   .patch(commentController.updateCommentOnEvent)
   .delete(commentController.deleteCommentOnEvent);
 
-// Nested commentsfor /comments/:commentId
+// Nested comments for /comments/:commentId
 router
   .route(`/:commentId`)
   .post(nestedCommentController.createChildComment)
