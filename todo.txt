@@ -2,7 +2,7 @@
 2. Handle review controller (include review calculation on event model)
 3. Handle comment controller (event-review releationship)
 4. Handle comment controller (comment-comment releationship)
-5. 
+5. ROUTERs------
 6. 
 7. 
 8. 
