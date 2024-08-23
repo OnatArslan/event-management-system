@@ -16,6 +16,7 @@ router.use(
   authMiddleware.protect,
   authMiddleware.restrict([`user`, `organizer`])
 );
+// Protected routes
 router.route(`/`).post(reviewController.createReview);
-
+router.route(`/:reviewId`).patch(reviewController.updateReview);
 module.exports = router;
