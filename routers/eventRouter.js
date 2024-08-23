@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.use(`/:eventId/comments`, commentRouter);
 router.use(`/:eventId/reviews`, reviewRouter);
-// router.use(`/:eventId/comments/:commentId`, nestedCommentRouter);
+router.use(`/:eventId/comments/:commentId/comments`, nestedCommentRouter);
 // These router do not have auth validation
 router.route(`/`).get(eventController.getAllEvents);
 router.route(`/:eventId`).get(eventController.getEvent);
