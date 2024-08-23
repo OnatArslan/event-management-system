@@ -26,4 +26,9 @@ router
   .post(authMiddleware.protect, nestedCommentController.createChildComment) // Create a reply to a comment
   .get(nestedCommentController.getAllChildComments); // Get all replies to a specific comment
 
+router
+  .route(`/:commentId/replies/:replieId`)
+  .patch(authMiddleware.protect, nestedCommentController.updateChildComment)
+  .delete(authMiddleware.protect);
+
 module.exports = router;

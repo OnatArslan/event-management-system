@@ -57,3 +57,17 @@ exports.createChildComment = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updateChildComment = async (req, res, next) => {
+  try {
+    const { content } = req.body;
+    const childId = req.params.replieId;
+
+    res.status(200).json({
+      status: `success`,
+      message: `Replie with : ${child.id} : is updated`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
