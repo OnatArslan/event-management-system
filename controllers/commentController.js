@@ -4,15 +4,23 @@ const { Op } = require(`sequelize`);
 // Controllers for event comments
 exports.getAllEventComments = async (req, res, next) => {
   try {
-    const eventComments = await Comment.findAll({
-      where: {
-        eventId: req.params.eventId,
-        parentCommentId: { [Op.eq]: null },
-      },
-    });
+    let comments;
+    if (req.params.eventId) {
+      comments = await Comment.findAll({
+        where: {
+          eventId: req.params.eventId,
+          parentCommentId: { [Op.eq]: null },
+        },
+      });
+    } else {
+      comments = await Comment.findAll();
+    }
+    if (!comments) {
+      return next(new Error(`Can not find any comments on database`));
+    }
     res.status(200).json({
       status: `success`,
-      data: { eventComments },
+      data: { comments },
     });
   } catch (err) {
     next(err);
