@@ -1,10 +1,10 @@
-1. Handle event controller (not include other models fields)
-2. Handle review controller (include review calculation on event model)
-3. Handle comment controller (event-review releationship)
-4. Handle comment controller (comment-comment releationship)
-5. ROUTERs------
-6. Add Friendship controllers and routers
-7. Add Chat function with friends
-8. 
-9. 
-10. 
+1-Arange Event and User releationship(many to many)
+2-Add price field on Events
+3-Add balance field on User
+4-Add book event functionalty(required payment)
+5-Add password reset functionalty
+6-Add Friendship code
+7-Test all of it
+8-Control all datas
+9-if neccessary add zod for validation
+10-Implement chat functionalty(with socket.io)
