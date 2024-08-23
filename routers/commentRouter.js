@@ -43,3 +43,4 @@ module.exports = router;
 // /:commentId go for this
 // v1/events/:eventId/comments/:commentId
 // /comments/:commentId
+// /comments/:commentId
