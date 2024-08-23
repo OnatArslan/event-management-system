@@ -16,11 +16,17 @@ router.route(`/:commentId`).get(); // Get one comment with given Id
 
 router.use(authMiddleware.protect);
 
+// This is for /events/:eventId/comments/:commentId
 router.route(`/`).post(commentController.createCommentOnEvent); // create comment on event
 router
   .route(`/:commentId`)
   .patch(commentController.updateCommentOnEvent)
-  .delete(commentController.deleteCommentOnEvent)
+  .delete(commentController.deleteCommentOnEvent);
+
+// Nested commentsfor /comments/:commentId
+router
+  .route(`/:commentId`)
   .post(nestedCommentController.createChildComment)
   .get(nestedCommentController.getAllChildComments);
+
 module.exports = router;
