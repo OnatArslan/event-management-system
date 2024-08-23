@@ -91,4 +91,4 @@ Comment.hasMany(Comment, {
 });
 
 // Export modules centeral
-module.exports = { sequelize, User, Event, Categorie, Review, Comment };
+module.exports = { User, Event, Categorie, Review, Comment };

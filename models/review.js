@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes, Model } = require(`sequelize`);
 const { sequelize } = require(`../database/connection`);
 
+const { Event } = require(`./index`);
+
 class Review extends Model {}
 
 Review.init(

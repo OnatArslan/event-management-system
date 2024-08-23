@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes, Model } = require(`sequelize`);
 const { sequelize } = require(`../database/connection`);
 
+const { Review } = require(`../models/index`);
+
 class Event extends Model {}
 
 Event.init(
@@ -28,6 +30,11 @@ Event.init(
     location: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    rating: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      defaultValue: 1,
     },
     // coordinates: {
     //   type: DataTypes.GEOMETRY("Point"),
