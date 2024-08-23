@@ -19,7 +19,7 @@ exports.getAllChildComments = async (req, res, next) => {
     }
     res.status(200).json({
       status: `success`,
-      data: { childComments },
+      data: { comment: parentComment, replies: childComments },
     });
   } catch (err) {
     next(err);
