@@ -209,3 +209,14 @@ exports.joinEvent = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.leaveEvent = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      status: `success`,
+      message: ``,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
