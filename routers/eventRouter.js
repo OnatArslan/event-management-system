@@ -21,7 +21,7 @@ router.route(`/:eventId`).get(eventController.getEvent);
 // Protect routes below
 router.use(auth.protect);
 // These routes for join event or leave event
-// router.route(`/:eventId/join`).post(eventController.joinEvent);
+router.route(`/:eventId/join`).post(eventController.joinEvent);
 // router.route(`/:eventId/leave`).post(eventController.joinEvent);
 
 // These routes for admins and organizers

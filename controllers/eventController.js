@@ -178,12 +178,33 @@ exports.deleteEvent = async (req, res, next) => {
 exports.joinEvent = async (req, res, next) => {
   try {
     // 1- Get event with given Id and check if it is exist
+    const event = await Event.findByPk(req.params.eventId, {
+      include: {
+        model: User,
+        as: `participants`,
+      },
+    });
+    if (!event) {
+      return next(new Error(`Can not find any event`));
+    }
     // 2- Compare the event's date with the current date.
+    const dateCheck = event.date > Date.now();
+    if (!dateCheck) {
+      return next(new Error(`This event is not active!!!`));
+    }
     // 3- Check if User already joined
+    const isAlreadyJoined = event.participants.includes(req.user);
+    console.log(isAlreadyJoined);
+    if (isAlreadyJoined) {
+      return next(new Error(`You are already joined this event!!!`));
+    }
     // 4- Add User to Event
     // Send success response
     res.status(200).json({
       status: `success`,
+      data: {
+        event,
+      },
     });
   } catch (err) {
     next(err);
