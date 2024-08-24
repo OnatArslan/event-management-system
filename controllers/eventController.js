@@ -174,3 +174,18 @@ exports.deleteEvent = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.joinEvent = async (req, res, next) => {
+  try {
+    // 1- Get event with given Id and check if it is exist
+    // 2- Compare the event's date with the current date.
+    // 3- Check if User already joined
+    // 4- Add User to Event
+    // Send success response
+    res.status(200).json({
+      status: `success`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
