@@ -48,7 +48,7 @@ exports.getAllEvents = async (req, res, next) => {
       ...paginationOptions,
       ...attributesOptions,
       attributes: {
-        exclude: [`categorieId`, `organizerId`, `deletedAt`],
+        exclude: [`categorieId`, `organizerId`],
       },
       include: {
         model: User,
