@@ -18,16 +18,20 @@ router.use(`/:eventId/reviews`, reviewRouter);
 router.route(`/`).get(eventController.getAllEvents);
 router.route(`/:eventId`).get(eventController.getEvent);
 
+// Protect routes below
+router.use(auth.protect);
+// These routes for join event or leave event
+// router.route(`/:eventId/join`).post(eventController.joinEvent);
+// router.route(`/:eventId/leave`).post(eventController.joinEvent);
+
+// These routes for admins and organizers
 // Protect these routes and restrict to 'admin' and 'organizer'
-router.use(auth.protect, auth.restrict([`admin`, `organizer`]));
+router.use(auth.restrict([`admin`, `organizer`]));
 router.route(`/`).post(eventController.createEvent);
-// FOR ADMINS OR ORGANIZER CRUD
+
 router
   .route("/:eventId")
   .patch(eventController.updateEvent)
   .delete(eventController.deleteEvent);
-
-// JOIN EVENT LIKE THAT
-router.route(`/:eventId`);
 
 module.exports = router;
