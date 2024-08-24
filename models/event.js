@@ -50,6 +50,21 @@ Event.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    price: {
+      type: DataTypes.DECIMAL(12, 2),
+      allowNull: false,
+      validate: {
+        min: 0,
+        max: 10000,
+      },
+    },
+    maxAttendees: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 1,
+      },
+    },
     // Foreign keys
     categorieId: {
       type: DataTypes.UUID,

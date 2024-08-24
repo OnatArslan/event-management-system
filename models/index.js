@@ -7,7 +7,7 @@ const Event = require(`./event`);
 const Categorie = require(`./categorie`);
 const Review = require(`./review`);
 const Comment = require(`./comment`);
-
+const EventUser = require(`./eventUser`);
 // Add associations here
 
 // User and Event Organizer releationship (One to Many)
@@ -16,6 +16,25 @@ User.hasMany(Event, {
   foreignKey: `organizerId`,
   as: `organizedEvents`,
 });
+
+// User and Event releationship (Many to Many) for join events
+Event.belongsToMany(User, {
+  foreignKey: `eventId`,
+  through: EventUser,
+  as: `participants`,
+});
+
+User.belongsToMany(Event, {
+  foreignKey: `userId`,
+  through: EventUser,
+  as: `joinedEvents`,
+});
+
+User.hasMany(EventUser, { foreignKey: `userId` });
+EventUser.belongsTo(User, { foreignKey: `userId` });
+
+Event.hasMany(EventUser, { foreignKey: `eventId` });
+EventUser.belongsTo(Event, { foreignKey: `eventId` });
 
 // Event and Categorie releationship (One to Many)
 Event.belongsTo(Categorie, {

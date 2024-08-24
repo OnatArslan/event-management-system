@@ -78,6 +78,14 @@ User.init(
         },
       },
     },
+    balance: {
+      type: DataTypes.DECIMAL(12, 2),
+      allowNull: false,
+      defaultValue: 0,
+      validate: {
+        min: 0,
+      },
+    },
     role: {
       type: DataTypes.ENUM,
       values: [`user`, `organizer`, `admin`],
