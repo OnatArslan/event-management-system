@@ -77,6 +77,11 @@ exports.getEvent = async (req, res, next) => {
           attributes: [`username`, `email`],
         },
         {
+          model: User,
+          as: `participants`,
+          attributes: [`username`, `email`],
+        },
+        {
           model: Review,
           as: `eventReviews`,
         },
@@ -198,8 +203,15 @@ exports.joinEvent = async (req, res, next) => {
       return next(new Error(`You are already joined this event!!!`));
     }
 
-    // 4- Add User to Event
+    // 4- Check if Event is full
+    const eventCount = await event.countParticipants();
+    if (eventCount === event.maxAttendees) {
+      return next(new Error(`Event is full!!`));
+    }
+    // 5- Add User to Event and add increase curAttendees by 1
     await event.addParticipant(req.user);
+    await event.increment({ curAttendees: 1 });
+
     // Send success response
     res.status(200).json({
       status: `success`,
@@ -218,12 +230,22 @@ exports.leaveEvent = async (req, res, next) => {
         as: `participants`,
       },
     });
+    // 1-Check if event exist
     if (!event) {
       return next(new Error(`Can not find any event with given ID`));
     }
+    // 2-Check user was joined event
+    const isJoined = await event.hasParticipant(req.user);
+    console.log(isJoined);
+    if (!isJoined) {
+      return next(new Error(`You are not a participant of this event`));
+    }
+    // 3-Remove user from Event and decriese by 1
+    await event.removeParticipant(req.user);
+    await event.increment({ curAttendees: -1 });
     res.status(200).json({
       status: `success`,
-      message: ``,
+      message: `${req.user.username} successfully leave event: ${event.title}`,
     });
   } catch (err) {
     next(err);

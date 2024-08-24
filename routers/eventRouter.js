@@ -24,7 +24,7 @@ router.use(auth.protect);
 router
   .route(`/:eventId/join`)
   .post(auth.restrict([`user`, `admin`]), eventController.joinEvent);
-// router.route(`/:eventId/leave`).post(eventController.joinEvent);
+router.route(`/:eventId/leave`).post(eventController.leaveEvent);
 
 // These routes for admins and organizers
 // Protect these routes and restrict to 'admin' and 'organizer'

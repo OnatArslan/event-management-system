@@ -65,6 +65,19 @@ Event.init(
         min: 1,
       },
     },
+    curAttendees: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+      validate: {
+        isInRange(value) {
+          if (value > this.maxAttendees) {
+            throw new Error(`Event is full`);
+          }
+        },
+        min: 0,
+      },
+    },
     // Foreign keys
     categorieId: {
       type: DataTypes.UUID,
