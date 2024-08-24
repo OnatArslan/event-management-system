@@ -21,10 +21,13 @@ router.route(`/:eventId`).get(eventController.getEvent);
 // Protect these routes and restrict to 'admin' and 'organizer'
 router.use(auth.protect, auth.restrict([`admin`, `organizer`]));
 router.route(`/`).post(eventController.createEvent);
-
+// FOR ADMINS OR ORGANIZER CRUD
 router
   .route("/:eventId")
   .patch(eventController.updateEvent)
   .delete(eventController.deleteEvent);
+
+// JOIN EVENT LIKE THAT
+router.route(`/:eventId`);
 
 module.exports = router;
