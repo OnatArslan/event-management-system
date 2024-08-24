@@ -104,8 +104,17 @@ exports.getEvent = async (req, res, next) => {
 
 exports.createEvent = async (req, res, next) => {
   try {
-    const { title, description, location, date, time, image, categorieId } =
-      req.body;
+    const {
+      title,
+      description,
+      location,
+      date,
+      time,
+      image,
+      categorieId,
+      price,
+      maxAttendees,
+    } = req.body;
     const newEvent = await Event.create({
       title,
       description,
@@ -115,6 +124,8 @@ exports.createEvent = async (req, res, next) => {
       image,
       categorieId,
       organizerId: req.user.id,
+      price,
+      maxAttendees,
     });
     if (!newEvent) {
       return next(new Error(`Event can not created!`));
