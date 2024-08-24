@@ -193,18 +193,17 @@ exports.joinEvent = async (req, res, next) => {
       return next(new Error(`This event is not active!!!`));
     }
     // 3- Check if User already joined
-    const isAlreadyJoined = event.participants.includes(req.user);
-    console.log(isAlreadyJoined);
+    const isAlreadyJoined = await event.hasParticipant(req.user);
     if (isAlreadyJoined) {
       return next(new Error(`You are already joined this event!!!`));
     }
+
     // 4- Add User to Event
+    await event.addParticipant(req.user);
     // Send success response
     res.status(200).json({
       status: `success`,
-      data: {
-        event,
-      },
+      message: `${req.user.username} successfully joined event:${event.title}`,
     });
   } catch (err) {
     next(err);
