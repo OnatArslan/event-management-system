@@ -208,6 +208,7 @@ exports.joinEvent = async (req, res, next) => {
     if (eventCount === event.maxAttendees) {
       return next(new Error(`Event is full!!`));
     }
+
     // 5- Add User to Event and add increase curAttendees by 1
     await event.addParticipant(req.user);
     await event.increment({ curAttendees: 1 });
