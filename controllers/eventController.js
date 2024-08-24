@@ -185,7 +185,7 @@ exports.joinEvent = async (req, res, next) => {
       },
     });
     if (!event) {
-      return next(new Error(`Can not find any event`));
+      return next(new Error(`Can not find any event with given ID`));
     }
     // 2- Compare the event's date with the current date.
     const dateCheck = event.date > Date.now();
@@ -212,6 +212,15 @@ exports.joinEvent = async (req, res, next) => {
 
 exports.leaveEvent = async (req, res, next) => {
   try {
+    const event = await Event.findByPk(req.params.eventId, {
+      include: {
+        model: User,
+        as: `participants`,
+      },
+    });
+    if (!event) {
+      return next(new Error(`Can not find any event with given ID`));
+    }
     res.status(200).json({
       status: `success`,
       message: ``,
