@@ -4,8 +4,8 @@
 3-Add balance field on User --DONE
 4-Add appointment event functionalty(required payment) --DONE (but payment)
 5-Add password reset functionalty
-6-Add Friendship code
-7-Test all of it
-8-Control all datas
+6-Add Friendship functionalty
+7-Test all your controllers
+8-Control all data
 9-if neccessary add zod for validation
 10-Implement chat functionalty(with socket.io)
