@@ -2,7 +2,7 @@
 2-Add price field on Events --DONE
 3-Check Is event Active or not and full or not 
 3-Add balance field on User --DONE
-4-Add appointment event functionalty(required payment)
+4-Add appointment event functionalty(required payment) --DONE (but payment)
 5-Add password reset functionalty
 6-Add Friendship code
 7-Test all of it
