@@ -10,7 +10,7 @@ router.route(`/log-out`).get(authController.logOut);
 router.route(`/forgot-password`).post(authController.forgotPassword);
 router
   .route(`/reset-password/:passwordResetToken`)
-  .post(authController.resetPassword);
+  .patch(authController.resetPassword);
 
 // Routes for profile
 router.use(authMiddleware.protect);

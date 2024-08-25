@@ -160,9 +160,24 @@ exports.forgotPassword = async (req, res, next) => {
 
 exports.resetPassword = async (req, res, next) => {
   try {
+    // 1) Get request data and check if exists
+    const { email } = req.body;
+    const plainToken = req.params.passwordResetToken;
+    if (!email || !plainToken) {
+      return next(new Erro(`Missing credentials`));
+    }
+    // 2) Get user with given data and check it
+    const user = await User.scope(`withAll`).findOne({
+      where: { email: email },
+    });
+    if (!user) {
+      return next(new Error(`Can not find any user with given email!`));
+    }
+    console.log(email, plainToken);
+
     res.status(200).json({
       status: `success`,
-      message: ``,
+      message: user,
     });
   } catch (err) {
     next(err);
