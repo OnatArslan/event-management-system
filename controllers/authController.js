@@ -2,7 +2,7 @@ const { User } = require("../models/index");
 const jwt = require("jsonwebtoken");
 const bcrypt = require(`bcrypt`);
 
-// Auth-------------------------------------
+// Auth related controllers
 exports.signUp = async (req, res, next) => {
   try {
     const { username, email, password, passwordConfirmation, profileInfo } =
@@ -35,7 +35,7 @@ exports.signUp = async (req, res, next) => {
     // Send response with message
     res.status(200).json({
       status: `success`,
-      message: `${newUser.username} is created successfuly`,
+      message: `${newUser.username} is created and logged in successfuly`,
     });
   } catch (err) {
     next(err);
@@ -101,6 +101,29 @@ exports.logOut = async (req, res, next) => {
   }
 };
 
+exports.forgotPassword = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      status: `success`,
+      message: ``,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      status: `success`,
+      message: ``,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Profile related controllers
 exports.getMe = async (req, res, next) => {
   try {
     // 1) Get user with req.user
@@ -121,8 +144,37 @@ exports.getMe = async (req, res, next) => {
     res.status(200).json({
       status: `success`,
       data: {
-        ProfileData: userObj,
+        ProfileData: user,
       },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.updateMe = async (req, res, next) => {
+  try {
+    // Validate req.body
+    if (req.body.password || req.body.role) {
+      return next(
+        new Error(
+          `Can not change password or role in this route.Please try /changePassword for this`
+        )
+      );
+    }
+    // 1) Get and check user
+    const user = req.user;
+    if (!user) {
+      return next(new Error(`Something went wrong`));
+    }
+    // 2) Get and check given data if data contains not allowed fields return error
+    const { username, email, profileInfo } = req.body;
+
+    await user.update({ username, email, profileInfo });
+
+    res.status(200).json({
+      status: `success`,
+      message: `${user.username} updated successfully`,
     });
   } catch (err) {
     next(err);
