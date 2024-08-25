@@ -109,5 +109,7 @@ Comment.hasMany(Comment, {
   onDelete: `CASCADE`,
 });
 
+// User and User releationship (Follow unfollow)
+
 // Export modules centeral
 module.exports = { User, Event, Categorie, Review, Comment };
