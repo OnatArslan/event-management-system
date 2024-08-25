@@ -36,6 +36,7 @@ exports.sendFollowRequest = async (req, res, next) => {
 
 exports.getFollowings = async (req, res, next) => {
   try {
+    // Remember this code block ;)
     const followings = await req.user.getFollowings({
       attributes: [`username`, `email`],
       joinTableAttributes: [`status`],
