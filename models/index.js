@@ -8,6 +8,7 @@ const Categorie = require(`./categorie`);
 const Review = require(`./review`);
 const Comment = require(`./comment`);
 const EventUser = require(`./eventUser`);
+const UserFollower = require(`./userFollower`);
 // Add associations here
 
 // User and Event Organizer releationship (One to Many)
@@ -110,6 +111,28 @@ Comment.hasMany(Comment, {
 });
 
 // User and User releationship (Follow unfollow)
+User.belongsToMany(User, {
+  foreignKey: `followerId`,
+  as: `followings`,
+  through: UserFollower,
+});
+User.belongsToMany(User, {
+  foreignKey: `followingId`,
+  as: `followers`,
+  through: UserFollower,
+});
+User.hasMany(UserFollower, { foreignKey: `followerId` });
+UserFollower.belongsTo(User, { foreignKey: `followerId` });
+User.hasMany(UserFollower, { foreignKey: `followingId` });
+UserFollower.belongsTo(User, { foreignKey: `followingId` });
 
 // Export modules centeral
-module.exports = { User, Event, Categorie, Review, Comment };
+module.exports = {
+  User,
+  Event,
+  Categorie,
+  Review,
+  Comment,
+  UserFollower,
+  EventUser,
+};
