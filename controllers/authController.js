@@ -101,6 +101,24 @@ exports.logOut = async (req, res, next) => {
   }
 };
 
+exports.getMe = async (req, res, next) => {
+  try {
+    // 1) Get user with req.user
+    const user = req.user;
+    if (!user) {
+      return next(new Error(`Something went wrong`));
+    }
+    res.status(200).json({
+      status: `success`,
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Change password(most important)
 // Change email(it is important too)
 // --------------------------------------Profile
