@@ -9,6 +9,7 @@ const router = express.Router();
 router.use(authMiddleware.protect);
 
 router.route(`/followings`).get(followController.getFollowings);
+router.route(`/followers`).get(followController.getFollowers);
 
 router.route;
 

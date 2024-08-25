@@ -54,3 +54,45 @@ exports.getFollowings = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getFollowRequests = async (req, res, next) => {
+  try {
+    // Remember this code block ;)
+    const followers = await req.user.getFollowers({
+      attributes: [`username`, `email`],
+      joinTableAttributes: [`status`],
+      through: {
+        where: { status: `pending` },
+      },
+    });
+    res.status(200).json({
+      status: `success`,
+      data: {
+        followers,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getFollowers = async (req, res, next) => {
+  try {
+    // Remember this code block ;)
+    const followers = await req.user.getFollowers({
+      attributes: [`username`, `email`],
+      joinTableAttributes: [`status`],
+      through: {
+        where: { status: `approved` },
+      },
+    });
+    res.status(200).json({
+      status: `success`,
+      data: {
+        followers,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -5,6 +5,12 @@ class UserFollower extends Model {}
 
 UserFollower.init(
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false,
+    },
     followingId: {
       type: DataTypes.UUID,
       defaultValue: UUIDV4,
