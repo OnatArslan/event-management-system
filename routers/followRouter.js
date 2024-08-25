@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.use(authMiddleware.protect);
 
-router.route(`/`);
+router.route(`/`).get(followController.sendFollowRequest);
 
 module.exports = router;

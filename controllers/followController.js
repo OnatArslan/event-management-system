@@ -1,3 +1,5 @@
+const { User } = require(`../models/index`);
+
 exports.sendFollowRequest = async (req, res, next) => {
   try {
     res.status(200).json({
