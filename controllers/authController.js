@@ -102,10 +102,10 @@ exports.logOut = (req, res, next) => {
 };
 
 // Change password(most important)
-
+// Change email(it is important too)
 // --------------------------------------Profile
 // getMe -> Get my Profile Info
-// Update me -> (password not included)
+// Update me -> (password and email not included)
 // Follow user
 // Unfollow user
 // Get followers
