@@ -12,11 +12,6 @@ router
   .route(`/reset-password/:passwordResetToken`)
   .patch(authController.resetPassword);
 
-// Routes for profile
-router.use(authMiddleware.protect);
-router
-  .route(`/profile`)
-  .get(authController.getMe)
-  .patch(authController.updateMe);
+router.route(`/friends/follow/:userId`).post();
 
 module.exports = router;

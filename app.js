@@ -19,6 +19,7 @@ const authRouter = require(`./routers/authRouter`);
 const categorieRouter = require(`./routers/categorieRouter`);
 const reviewRouter = require(`./routers/reviewRouter`);
 const commentRouter = require(`./routers/commentRouter`);
+const profileRouter = require(`./routers/profileRouter`);
 
 // Using neccessary middlewares(packages)
 app.use(morgan(`combined`)); // http request logger middleware
@@ -58,7 +59,7 @@ app.use(`/api/v1/categories`, categorieRouter);
 app.use(`/api/v1/auth`, authRouter);
 app.use(`/api/v1/reviews`, reviewRouter);
 app.use(`/api/v1/comments`, commentRouter);
-
+app.use(`/api/v1/profile`, profileRouter);
 app.use(`*`, (req, res, next) => {
   res.status(500).json({
     status: `fail`,
