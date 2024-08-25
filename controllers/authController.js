@@ -1,6 +1,9 @@
 const { User } = require("../models/index");
 const jwt = require("jsonwebtoken");
 const bcrypt = require(`bcrypt`);
+const transporter = require(`../utils/mailer`);
+
+const crypto = require(`node:crypto`);
 
 // Auth related controllers
 exports.signUp = async (req, res, next) => {
@@ -103,10 +106,53 @@ exports.logOut = async (req, res, next) => {
 
 exports.forgotPassword = async (req, res, next) => {
   try {
-    res.status(200).json({
-      status: `success`,
-      message: ``,
-    });
+    const { email } = req.body;
+    if (!email) {
+      return next(new Error(`Missing credentials`));
+    }
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      return next(new Error(`Can not find any user with given email`));
+    }
+    // Create password reset token and hash for save in user field
+    const plainToken = crypto.randomBytes(32).toString(`hex`);
+    const hashedToken = crypto
+      .createHash(`sha256`)
+      .update(plainToken)
+      .digest(`hex`);
+    // Update users fields and save user
+    user.passwordResetToken = hashedToken;
+    user.passwordResetExpires = Date.now() + 10 * 60 * 1000; // Token valid for 10 minutes
+    await user.save({ validate: false });
+
+    const resetURL = `${req.protocol}://${req.get(
+      "host"
+    )}/api/v1/auth/resetPassword/${plainToken}`;
+    const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
+
+    try {
+      await transporter.sendMail({
+        from: `Eventy support`,
+        to: user.email,
+        subject: `Here is your password reset token (valid for 10 minutes)`,
+        text: `${plainToken}`,
+      });
+      res.status(200).json({
+        status: `success`,
+        message: `Password reset token send to your email`,
+        dataTest: {
+          user,
+        },
+      });
+    } catch (err) {
+      user.passwordResetToken = null;
+      user.passwordResetExpires = null;
+      await user.save({ validate: false });
+      return res.status(500).json({
+        status: `fail`,
+        message: `There was an error sending the email.Try again later`,
+      });
+    }
   } catch (err) {
     next(err);
   }
