@@ -258,6 +258,17 @@ exports.updateMe = async (req, res, next) => {
   }
 };
 
+exports.sendFollowRequest = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      status: `success`,
+      message: `Follow request send to user`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Change password(most important)
 // Change email(it is important too)
 // --------------------------------------Profile
