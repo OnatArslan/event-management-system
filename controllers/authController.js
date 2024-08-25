@@ -108,10 +108,20 @@ exports.getMe = async (req, res, next) => {
     if (!user) {
       return next(new Error(`Something went wrong`));
     }
+    const { username, email, balance, profileInfo, createdAt, updatedAt } =
+      user;
+    const userObj = {
+      username,
+      email,
+      balance,
+      profileInfo,
+      createdAt,
+      updatedAt,
+    };
     res.status(200).json({
       status: `success`,
       data: {
-        user,
+        ProfileData: userObj,
       },
     });
   } catch (err) {
