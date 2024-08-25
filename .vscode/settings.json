@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "database": "event-management",
+      "name": "event-management",
+      "group": "none",
+      "username": "postgres"
+    }
+  ]
+}
