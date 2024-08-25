@@ -91,6 +91,7 @@ User.init(
       type: DataTypes.TEXT,
       defaultValue: `Fresh user :)`,
     },
+    // These fields used in auth/reset-password and auth/forgot-password routes
     passwordResetToken: {
       type: DataTypes.STRING,
       allowNull: true,
