@@ -10,6 +10,8 @@ router.use(authMiddleware.protect);
 
 router.route(`/followings`).get(followController.getFollowings);
 
+router.route;
+
 router.route(`/:userId`).get(followController.sendFollowRequest);
 
 module.exports = router;

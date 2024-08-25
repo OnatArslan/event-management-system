@@ -41,7 +41,7 @@ exports.getFollowings = async (req, res, next) => {
       attributes: [`username`, `email`],
       joinTableAttributes: [`status`],
       through: {
-        where: { status: `pending` },
+        where: { status: `approved` },
       },
     });
     res.status(200).json({
