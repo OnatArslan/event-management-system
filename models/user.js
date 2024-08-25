@@ -95,6 +95,14 @@ User.init(
       type: DataTypes.TEXT,
       defaultValue: `Fresh user :)`,
     },
+    passwordResetToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null,
+    },
+    passwordResetExpires: {
+      type: DataTypes.DATE,
+    },
   },
   {
     // Options
