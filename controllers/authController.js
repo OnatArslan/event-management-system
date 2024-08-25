@@ -83,7 +83,7 @@ exports.signIn = async (req, res, next) => {
   }
 };
 
-exports.logOut = (req, res, next) => {
+exports.logOut = async (req, res, next) => {
   try {
     // Clear the token cookie
     res.cookie("token", "", {
