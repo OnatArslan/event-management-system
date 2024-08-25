@@ -121,10 +121,16 @@ User.belongsToMany(User, {
   as: `followers`,
   through: UserFollower,
 });
-User.hasMany(UserFollower, { foreignKey: `followerId` });
-UserFollower.belongsTo(User, { foreignKey: `followerId` });
-User.hasMany(UserFollower, { foreignKey: `followingId` });
-UserFollower.belongsTo(User, { foreignKey: `followingId` });
+User.hasMany(UserFollower, {
+  foreignKey: `followerId`,
+  as: `throughFollowers`,
+});
+UserFollower.belongsTo(User, { foreignKey: `followerId`, as: `follower` });
+User.hasMany(UserFollower, {
+  foreignKey: `followingId`,
+  as: `throughFollowings`,
+});
+UserFollower.belongsTo(User, { foreignKey: `followingId`, as: `following` });
 
 // Export modules centeral
 module.exports = {

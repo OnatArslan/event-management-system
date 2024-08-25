@@ -13,6 +13,10 @@ router.route(`/followers`).get(followController.getFollowers);
 
 router.route;
 
-router.route(`/:userId`).get(followController.sendFollowRequest);
+router.route(`/:userId`).post(followController.sendFollowRequest);
+router.route(`/requests`).get(followController.getFollowRequests);
+router
+  .route(`/requests/:requestId`)
+  .post(followController.responseFollowRequest);
 
 module.exports = router;
