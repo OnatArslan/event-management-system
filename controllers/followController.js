@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { User, UserFollower } = require(`../models/index`);
 
 exports.sendFollowRequest = async (req, res, next) => {
@@ -7,7 +8,10 @@ exports.sendFollowRequest = async (req, res, next) => {
     if (!user) {
       return next(new Error(`Can not find any user with given ID`));
     }
-    const isAlreadyFriends = await curUser.hasFollower(user);
+    if (user.id === curUser.id) {
+      return next(new Error(`Can not follow yourself`));
+    }
+    const isAlreadyFriends = await curUser.hasFollowing(user);
     console.log(isAlreadyFriends);
     if (isAlreadyFriends) {
       return next(
@@ -30,11 +34,20 @@ exports.sendFollowRequest = async (req, res, next) => {
   }
 };
 
-exports.getFollowers = async (req, res, next) => {
+exports.getFollowings = async (req, res, next) => {
   try {
+    const followings = await req.user.getFollowings({
+      attributes: [`username`, `email`],
+      joinTableAttributes: [`status`],
+      through: {
+        where: { status: `pending` },
+      },
+    });
     res.status(200).json({
       status: `success`,
-      message: `Follow request send to user:${user.username}`,
+      data: {
+        followings,
+      },
     });
   } catch (err) {
     next(err);
