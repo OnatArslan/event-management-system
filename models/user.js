@@ -47,16 +47,12 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: {
-          args: [8, 30],
-          msg: "Password must be between 8 and 30 characters",
-        },
         isComplex(value) {
           const regex =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/;
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}/;
           if (!regex.test(value)) {
             throw new Error(
-              "Password must include uppercase, lowercase, number, and special character"
+              "Password must include uppercase, lowercase, number, and special character and must longher than 8 chars"
             );
           }
         },

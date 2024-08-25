@@ -161,7 +161,7 @@ exports.forgotPassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
   try {
     // 1) Get request data and check if exists
-    const { email } = req.body;
+    const { email, password, passwordConfirmation } = req.body;
     const plainToken = req.params.passwordResetToken;
     if (!email || !plainToken) {
       return next(new Erro(`Missing credentials`));
@@ -173,8 +173,24 @@ exports.resetPassword = async (req, res, next) => {
     if (!user) {
       return next(new Error(`Can not find any user with given email!`));
     }
-    console.log(email, plainToken);
 
+    const hashedToken = crypto
+      .createHash(`sha256`)
+      .update(plainToken)
+      .digest(`hex`);
+
+    if (user.passwordResetToken !== hashedToken) {
+      return next(new Error(`Invalid token`));
+    }
+    if (Date.now() > user.passwordResetExpires) {
+      return next(new Error(`Token has expired`));
+    }
+    await user.update({
+      password: password,
+      passwordConfirmation,
+      passwordResetToken: null,
+      passwordResetExpires: null,
+    });
     res.status(200).json({
       status: `success`,
       message: user,
