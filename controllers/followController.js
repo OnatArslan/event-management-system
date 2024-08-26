@@ -144,9 +144,27 @@ exports.responseFollowRequest = async (req, res, next) => {
 
 exports.unfollow = async (req, res, next) => {
   try {
+    if (!req.params.followingId) {
+      return next(new Error(`user ID do not found`));
+    }
+    const userFollower = await UserFollower.findOne({
+      where: {
+        followingId: req.params.followingId,
+        followerId: req.user.id,
+        status: `approved`,
+      },
+    });
+    if (!userFollower) {
+      return next(
+        new Error(`Can not unfollow because you are not following this user`)
+      );
+    }
+    await userFollower.destroy({
+      force: true,
+    });
     res.status(200).json({
       status: `success`,
-      message: `User removed from your followers successfully`,
+      message: `User successfully removed from your followings`,
     });
   } catch (err) {
     next(err);
