@@ -159,9 +159,7 @@ exports.unfollow = async (req, res, next) => {
         new Error(`Can not unfollow because you are not following this user`)
       );
     }
-    await userFollower.destroy({
-      force: true,
-    });
+    await userFollower.destroy({ force: true });
     res.status(200).json({
       status: `success`,
       message: `User successfully removed from your followings`,
