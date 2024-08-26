@@ -141,3 +141,14 @@ exports.responseFollowRequest = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.unfollow = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      status: `success`,
+      message: `User removed from your followers successfully`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
