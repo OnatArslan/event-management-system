@@ -100,6 +100,20 @@ User.init(
     passwordResetExpires: {
       type: DataTypes.DATE,
     },
+    followerCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      validate: {
+        min: 0,
+      },
+    },
+    followingCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      validate: {
+        min: 0,
+      },
+    },
   },
   {
     // Options
