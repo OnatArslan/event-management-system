@@ -100,17 +100,17 @@ exports.getFollowRequests = async (req, res, next) => {
 exports.getFollowRequest = async (req, res, next) => {
   try {
     // Remember this code block ;)
-    const followRequests = await req.user.getFollowers({
+    const followRequest = await req.user.getFollowers({
       attributes: [`username`, `email`],
-      joinTableAttributes: [`status`, `id`],
+      joinTableAttributes: [`id`, `status`],
       through: {
-        where: { status: `pending` },
+        where: { id: req.params.requestId },
       },
     });
     res.status(200).json({
       status: `success`,
       data: {
-        followRequests,
+        followRequest,
       },
     });
   } catch (err) {
