@@ -97,6 +97,27 @@ exports.getFollowRequests = async (req, res, next) => {
   }
 };
 
+exports.getFollowRequest = async (req, res, next) => {
+  try {
+    // Remember this code block ;)
+    const followRequests = await req.user.getFollowers({
+      attributes: [`username`, `email`],
+      joinTableAttributes: [`status`, `id`],
+      through: {
+        where: { status: `pending` },
+      },
+    });
+    res.status(200).json({
+      status: `success`,
+      data: {
+        followRequests,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.responseFollowRequest = async (req, res, next) => {
   try {
     const response = req.body.response;

@@ -18,6 +18,7 @@ router.route(`/:userId`).post(followController.sendFollowRequest);
 router.route(`/requests`).get(followController.getFollowRequests);
 router
   .route(`/requests/:requestId`)
-  .post(followController.responseFollowRequest);
+  .post(followController.responseFollowRequest)
+  .get(followController.getFollowRequest);
 
 module.exports = router;
