@@ -9,10 +9,12 @@ const router = express.Router();
 router.use(authMiddleware.protect);
 
 router.route(`/followings`).get(followController.getFollowings);
-router.route(`/followings/:followingId`).delete(followController.unfollow);
+router
+  .route(`/followings/:followingId`)
+  .delete(followController.removeFollowing);
 
 router.route(`/followers`).get(followController.getFollowers);
-router.route;
+router.route(`/followers/:followerId`).delete(followController.removeFollower);
 
 router.route(`/:userId`).post(followController.sendFollowRequest);
 router.route(`/requests`).get(followController.getFollowRequests);

@@ -163,7 +163,7 @@ exports.responseFollowRequest = async (req, res, next) => {
   }
 };
 
-exports.unfollow = async (req, res, next) => {
+exports.removeFollowing = async (req, res, next) => {
   try {
     if (!req.params.followingId) {
       return next(new Error(`user ID do not found`));
@@ -185,6 +185,40 @@ exports.unfollow = async (req, res, next) => {
       status: `success`,
       message: `User successfully removed from your followings`,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.removeFollower = async (req, res, next) => {
+  try {
+    if (!req.params.followerId) {
+      return next(new Error(`Can not find any follower`));
+    }
+    const friendShip = await UserFollower.findOne({
+      where: {
+        followingId: req.user.id,
+        followerId: req.params.followerId,
+        status: `approved`,
+      },
+    });
+    if (!friendShip) {
+      return next(new Error(`Can not find any follower with given ID`));
+    }
+    const follower = await User.findOne({
+      where: { id: req.params.followerId },
+    });
+    if (!follower) {
+      return next(new Error(`Can not find any user with given ID`));
+    }
+    try {
+      await req.user.removeFollowers(follower);
+      res.status(200).json({
+        message: `User :${follower.username} removed successfully`,
+      });
+    } catch (err) {
+      next(err);
+    }
   } catch (err) {
     next(err);
   }
