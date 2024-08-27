@@ -95,7 +95,9 @@ exports.getEvent = async (req, res, next) => {
         exclude: [`categorieId`, `organizerId`, `deletedAt`],
       },
     });
-
+    if (!event) {
+      return next(new Error(`Can not find any event with given ID`));
+    }
     res.status(200).json({
       status: `success`,
       data: {
