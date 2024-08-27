@@ -137,8 +137,30 @@ exports.responseFollowRequest = async (req, res, next) => {
           new Error(`Can not find any follow request or already approved!`)
         );
       }
+      const follower = await User.findOne({
+        where: {
+          id: followRequest.followingId,
+        },
+      });
       await followRequest.update({
         status: `approved`,
+      });
+      const followerCount = await req.user.countFollowers({
+        through: {
+          where: { status: `approved` },
+        },
+      });
+      const followingCount = await follower.countFollowings({
+        through: {
+          where: { status: `approved` },
+        },
+      });
+
+      await req.user.update({
+        followerCount: followerCount,
+      });
+      await follower.update({
+        followingCoin: followingCount,
       });
     } else {
       followRequest = await UserFollower.findOne({
