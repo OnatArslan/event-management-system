@@ -139,9 +139,12 @@ exports.responseFollowRequest = async (req, res, next) => {
       }
       const follower = await User.findOne({
         where: {
-          id: followRequest.followingId,
+          id: followRequest.followerId,
         },
       });
+      if (!follower) {
+        return next(new Error(`Can not find follower user`));
+      }
       await followRequest.update({
         status: `approved`,
       });
@@ -155,12 +158,13 @@ exports.responseFollowRequest = async (req, res, next) => {
           where: { status: `approved` },
         },
       });
+      console.log(followingCount);
 
       await req.user.update({
         followerCount: followerCount,
       });
       await follower.update({
-        followingCoin: followingCount,
+        followingCount: followingCount,
       });
     } else {
       followRequest = await UserFollower.findOne({
