@@ -163,6 +163,7 @@ exports.responseFollowRequest = async (req, res, next) => {
   }
 };
 
+// This is for remove following
 exports.removeFollowing = async (req, res, next) => {
   try {
     if (!req.params.followingId) {
@@ -190,6 +191,7 @@ exports.removeFollowing = async (req, res, next) => {
   }
 };
 
+// This is remove your follower
 exports.removeFollower = async (req, res, next) => {
   try {
     if (!req.params.followerId) {
