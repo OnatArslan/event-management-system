@@ -261,6 +261,22 @@ exports.removeFollower = async (req, res, next) => {
     }
     try {
       await req.user.removeFollowers(follower);
+      const followerCount = await req.user.countFollowers({
+        through: {
+          where: { status: `approved` },
+        },
+      });
+      const followingCount = await follower.countFollowings({
+        through: {
+          where: { status: `approved` },
+        },
+      });
+      await req.user.update({
+        followerCount: followerCount,
+      });
+      await follower.update({
+        followingCount: followingCount,
+      });
       res.status(200).json({
         message: `User :${follower.username} removed successfully`,
       });
