@@ -4,7 +4,7 @@
 3-Add balance field on User --DONE
 4-Add appointment event functionalty(required payment) --DONE (but payment)
 5-Add password reset functionalty -- DONE
-6-Add Friendship functionalty -- LOADING...
+6-Add Friendship functionalty -- DONE
 7-Test all your controllers
 8-Control all data
 9-if neccessary add zod for validation

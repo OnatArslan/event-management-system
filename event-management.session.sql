@@ -1,1 +1,1 @@
-select * from user_follower
+DELETE FROM users WHERE username LIKE 'user%';
