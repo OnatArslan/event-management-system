@@ -5,7 +5,12 @@
 4-Add appointment event functionalty(required payment) --DONE (but payment)
 5-Add password reset functionalty -- DONE
 6-Add Friendship functionalty -- DONE
-7-Test all your controllers(You must learn jest or other test framework)
-8-Control all data
-9-if neccessary add zod for validation
-10-Implement chat functionalty(with socket.io)
+7-Test Controllers
+7.1-Categorie
+7.2-Event
+7.3-Review
+7.4-Comment
+7.5-User
+8-Control all data flow if not valid data passed
+9-if neccessary add zod for validation(Best aproach for learning zod)
+10-Implement chat functionalty(with socket.io) idk how can I do it
