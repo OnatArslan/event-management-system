@@ -2,7 +2,11 @@ const { Categorie, Event } = require(`../models/index`);
 
 exports.getAllCategories = async (req, res, next) => {
   try {
-    const { count, rows } = await Categorie.findAndCountAll();
+    const { count, rows } = await Categorie.findAndCountAll({
+      attributes: {
+        exclude: [`deletedAt`],
+      },
+    });
 
     req.session.visited = true;
 
