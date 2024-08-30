@@ -1,5 +1,5 @@
 const { Categorie, Event, User } = require(`../models/index`);
-
+const { Sequelize, Op } = require(`sequelize`);
 exports.getAllCategories = async (req, res, next) => {
   try {
     const { count, rows } = await Categorie.findAndCountAll({
@@ -97,7 +97,8 @@ exports.deleteCategorie = async (req, res, next) => {
       where: {
         id: req.params.categorieId,
       },
-      force: true,
+      // This will use paranoid property(soft delete)
+      force: false,
     });
     res.status(200).json({
       status: `success`,
