@@ -7,9 +7,9 @@ exports.getAllCategories = async (req, res, next) => {
         exclude: [`deletedAt`, `createdAt`, `updatedAt`],
       },
     });
-
-    req.session.visited = true;
-
+    if (count === 0) {
+      return next(new Error(`Can not find any categorie`));
+    }
     res.status(200).json({
       status: `success`,
       message: `Showing ${count} categories on this page`,
