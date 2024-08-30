@@ -24,17 +24,17 @@ exports.getAllCategories = async (req, res, next) => {
 
 exports.createCategorie = async (req, res, next) => {
   try {
-    const categorie = await Categorie.create(req.body);
-
+    const { name, description } = req.body;
+    const categorie = await Categorie.create({
+      name,
+      description,
+    });
     if (!categorie) {
       return next(new Error(`Creatin failed please try again!`));
     }
-
     res.status(200).json({
       status: `success`,
-      data: {
-        categorie: categorie,
-      },
+      message: `Categorie : "${categorie.name}" created successfully`,
     });
   } catch (error) {
     next(error);
