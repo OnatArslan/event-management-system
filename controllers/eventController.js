@@ -108,9 +108,8 @@ exports.getEvent = async (req, res, next) => {
           as: `eventComments`,
         },
       ],
-
       attributes: {
-        exclude: [`categorieId`, `organizerId`, `deletedAt`],
+        exclude: [`categorieId`, `organizerId`, `deletedAt`, `updatedAt`],
       },
     });
     if (!event) {
