@@ -5,10 +5,11 @@ const authMiddleware = require(`../middlewares/authMiddleware`);
 
 const router = express.Router({ mergeParams: true });
 
-router
-  .route(`/`)
-  .get(categorieController.getAllCategories)
-  .post(categorieController.createCategorie);
+router.route(`/`).get(categorieController.getAllCategories);
+
+// Protect below routes
+router.use(authMiddleware.protect, authMiddleware.restrict(`admin`));
+router.route(`/`).post(categorieController.createCategorie);
 
 router
   .route(`/:categorieId`)
