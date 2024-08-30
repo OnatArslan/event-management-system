@@ -95,6 +95,9 @@ exports.getEvent = async (req, res, next) => {
           model: User,
           as: `participants`,
           attributes: [`username`, `email`],
+          through: {
+            attributes: [],
+          },
         },
         {
           model: Review,
