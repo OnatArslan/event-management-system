@@ -1,5 +1,5 @@
 const { Event, User, Review, Comment, Categorie } = require("../models/index");
-
+const { Op } = require(`sequelize`);
 exports.getAllEvents = async (req, res, next) => {
   try {
     const { page = 1, limit = 10, sort, fields } = req.query;
@@ -102,10 +102,35 @@ exports.getEvent = async (req, res, next) => {
         {
           model: Review,
           as: `eventReviews`,
+          attributes: [`rating`, `content`, `createdAt`],
+          include: {
+            model: User,
+            as: `reviewer`,
+            attributes: [`username`],
+          },
         },
         {
           model: Comment,
           as: `eventComments`,
+          attributes: [`content`, `createdAt`],
+          where: { parentCommentId: null },
+          include: [
+            {
+              model: User,
+              as: `author`,
+              attributes: [`username`],
+            },
+            {
+              model: Comment,
+              as: `replies`,
+              attributes: [`content`, `createdAt`],
+              include: {
+                model: User,
+                as: `author`,
+                attributes: [`username`],
+              },
+            },
+          ],
         },
       ],
       attributes: {
