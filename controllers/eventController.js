@@ -103,6 +103,7 @@ exports.getEvent = async (req, res, next) => {
           model: Review,
           as: `eventReviews`,
           attributes: [`rating`, `content`, `createdAt`],
+          limit: 50,
           include: {
             model: User,
             as: `reviewer`,
@@ -113,6 +114,7 @@ exports.getEvent = async (req, res, next) => {
           model: Comment,
           as: `eventComments`,
           attributes: [`content`, `createdAt`],
+          limit: 50,
           where: { parentCommentId: null },
           include: [
             {
