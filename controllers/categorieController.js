@@ -72,11 +72,16 @@ exports.getCategorieAndEvents = async (req, res, next) => {
 
 exports.updateCategorie = async (req, res, next) => {
   try {
-    await Categorie.update(req.body, {
-      where: {
-        id: req.params.categorieId,
-      },
-    });
+    const { name, description } = req.body;
+    await Categorie.update(
+      { name: name, description: description },
+      {
+        where: {
+          id: req.params.categorieId,
+        },
+        validate: true,
+      }
+    );
     res.status(200).json({
       status: `success`,
       message: `Categorie updated successfully`,
