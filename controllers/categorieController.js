@@ -1,4 +1,4 @@
-const { Categorie, Event } = require(`../models/index`);
+const { Categorie, Event, User } = require(`../models/index`);
 
 exports.getAllCategories = async (req, res, next) => {
   try {
@@ -47,7 +47,14 @@ exports.getCategorieAndEvents = async (req, res, next) => {
       include: {
         model: Event,
         as: `categorizedEvents`,
+        attributes: [`title`, `description`, `location`],
+        include: {
+          model: User,
+          as: `organizer`,
+          attributes: [`username`, `email`],
+        },
       },
+      attributes: [`id`, `name`, `description`],
     });
     if (!categorie) {
       return next(new Error(`This categorie does not exist!`));
