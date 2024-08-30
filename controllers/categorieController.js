@@ -4,7 +4,7 @@ exports.getAllCategories = async (req, res, next) => {
   try {
     const { count, rows } = await Categorie.findAndCountAll({
       attributes: {
-        exclude: [`deletedAt`],
+        exclude: [`deletedAt`, `createdAt`, `updatedAt`],
       },
     });
 
