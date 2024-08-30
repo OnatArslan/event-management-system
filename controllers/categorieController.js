@@ -99,7 +99,7 @@ exports.deleteCategorie = async (req, res, next) => {
         id: req.params.categorieId,
       },
       // This will use paranoid property(soft delete)
-      force: false,
+      force: true,
     });
     res.status(200).json({
       status: `success`,

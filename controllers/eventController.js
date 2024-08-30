@@ -1,4 +1,4 @@
-const { Event, User, Review, Comment } = require("../models/index");
+const { Event, User, Review, Comment, Categorie } = require("../models/index");
 
 exports.getAllEvents = async (req, res, next) => {
   try {
@@ -48,13 +48,28 @@ exports.getAllEvents = async (req, res, next) => {
       ...paginationOptions,
       ...attributesOptions,
       attributes: {
-        exclude: [`categorieId`, `organizerId`],
+        exclude: [
+          `categorieId`,
+          `organizerId`,
+          `createdAt`,
+          `updatedAt`,
+          `deletedAt`,
+          `curAttendees`,
+          `description`,
+        ],
       },
-      include: {
-        model: User,
-        as: `organizer`,
-        attributes: [`username`, `email`],
-      },
+      include: [
+        {
+          model: User,
+          as: `organizer`,
+          attributes: [`username`],
+        },
+        {
+          model: Categorie,
+          as: `category`,
+          attributes: [`name`],
+        },
+      ],
     });
 
     res.status(200).json({
