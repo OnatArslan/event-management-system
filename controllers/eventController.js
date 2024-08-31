@@ -104,6 +104,7 @@ exports.getEvent = async (req, res, next) => {
           as: `eventReviews`,
           attributes: [`rating`, `content`, `createdAt`],
           limit: 50,
+          // Include reviewer for review
           include: {
             model: User,
             as: `reviewer`,
