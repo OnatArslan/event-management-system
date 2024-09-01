@@ -214,6 +214,7 @@ exports.deleteEvent = async (req, res, next) => {
     const event = await Event.findOne({
       where: { id: req.params.eventId, organizerId: req.user.id },
     });
+    // Check event and user if current user is not creator of this event return error
     if (!event) {
       return next(new Error(`Event's organizer is not you!!`));
     }
