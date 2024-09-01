@@ -259,9 +259,8 @@ exports.joinEvent = async (req, res, next) => {
     }
 
     // 4- Check if Event is full
-    const eventCount = await event.countParticipants();
-    if (eventCount === event.maxAttendees) {
-      return next(new Error(`Event is full!!`));
+    if (event.curAttendees >= event.maxAttendees) {
+      return next(new Error(`Event is full`));
     }
 
     // 5- Create EventUser
