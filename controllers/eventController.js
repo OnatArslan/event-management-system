@@ -293,11 +293,11 @@ exports.leaveEvent = async (req, res, next) => {
     }
     // 2-Check user was joined event
     const isJoined = await event.hasParticipant(req.user);
-    console.log(isJoined);
+    // If user is not participant of event return error
     if (!isJoined) {
       return next(new Error(`You are not a participant of this event`));
     }
-    // 3-Remove user from Event
+    // 3-Delete Join table and run afterDelete hook
     await EventUser.destroy({
       where: {
         userId: req.user.id,
