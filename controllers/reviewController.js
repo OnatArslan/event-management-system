@@ -9,7 +9,7 @@ exports.getAllReviews = async (req, res, next) => {
     }
     const { count, rows } = await Review.findAndCountAll({
       where: { eventId: req.params.eventId },
-      attributes: [`id`, `rating`, `content`, `createdAt`],
+      attributes: [`id`, `rating`, `content`, `createdAt`, `updatedAt`],
       include: [
         {
           model: User,

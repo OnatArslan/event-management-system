@@ -170,6 +170,48 @@ Review.afterCreate(async (review) => {
     { where: { id: event.id } }
   );
 });
+Review.afterUpdate(async (review) => {
+  const event = await Event.findByPk(review.eventId, {
+    include: {
+      model: Review,
+      as: `eventReviews`,
+      attributes: [],
+    },
+    attributes: {
+      include: [
+        [Sequelize.fn(`AVG`, Sequelize.col(`eventReviews.rating`)), `rating`],
+      ],
+    },
+    group: [`Event.id`],
+  });
+  await Event.update(
+    {
+      rating: event.rating,
+    },
+    { where: { id: event.id } }
+  );
+});
+Review.afterDestroy(async (review) => {
+  const event = await Event.findByPk(review.eventId, {
+    include: {
+      model: Review,
+      as: `eventReviews`,
+      attributes: [],
+    },
+    attributes: {
+      include: [
+        [Sequelize.fn(`AVG`, Sequelize.col(`eventReviews.rating`)), `rating`],
+      ],
+    },
+    group: [`Event.id`],
+  });
+  await Event.update(
+    {
+      rating: event.rating,
+    },
+    { where: { id: event.id } }
+  );
+});
 
 // Export modules centeral
 module.exports = {
