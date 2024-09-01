@@ -4,18 +4,31 @@ const { Sequelize, Op } = require("sequelize");
 
 exports.getAllReviews = async (req, res, next) => {
   try {
-    const reviews = await Review.findAll({
+    if (!req.params.eventId) {
+      return next(new Error(`For reviews you must enter a event ID`));
+    }
+    const { count, rows } = await Review.findAndCountAll({
       where: { eventId: req.params.eventId },
-      attributes: {
-        exclude: [`deletedAt`],
-      },
+      attributes: [`id`, `rating`, `content`, `createdAt`],
+      include: [
+        {
+          model: User,
+          as: `reviewer`,
+          attributes: [`username`],
+        },
+      ],
+      limit: 100,
     });
-    if (!reviews) {
-      return next(new Error(`Can not find reviews`));
+    if (count === 0) {
+      res.status(200).json({
+        status: `success`,
+        message: `This event does not have any review!`,
+      });
     }
     res.status(200).json({
       status: `success`,
-      data: { reviews },
+      message: `Showing ${count} review on this page`,
+      data: { reviews: rows },
     });
   } catch (err) {
     next(err);
