@@ -1,3 +1,4 @@
+// Importing data Models from models/index.js
 const {
   Event,
   User,
@@ -6,7 +7,9 @@ const {
   Categorie,
   EventUser,
 } = require("../models/index");
+// Import Operators from sequelize
 const { Op } = require(`sequelize`);
+
 exports.getAllEvents = async (req, res, next) => {
   try {
     const { page = 1, limit = 10, sort, fields } = req.query;
