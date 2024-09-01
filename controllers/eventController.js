@@ -211,13 +211,13 @@ exports.updateEvent = async (req, res, next) => {
 
 exports.deleteEvent = async (req, res, next) => {
   try {
-    await Event.destroy({
-      where: {
-        id: req.params.eventId,
-      },
-      // Because of event model is paranoid if you want hard delete you must use force:true
-      force: true,
+    const event = await Event.findOne({
+      where: { id: req.params.eventId, organizerId: req.user.id },
     });
+    if (!event) {
+      return next(new Error(`Event's organizer is not you!!`));
+    }
+    await event.delete({});
     res.status(200).json({
       status: `success`,
       message: `Event deleted successfully`,
