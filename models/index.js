@@ -133,9 +133,20 @@ User.hasMany(UserFollower, {
 UserFollower.belongsTo(User, { foreignKey: `followingId`, as: `following` });
 
 // Here write hooks
-EventUser.beforeCreate(async (eventUser) => {
+EventUser.afterCreate(async (eventUser) => {
   const event = await Event.findByPk(eventUser.eventId);
-  console.log(event);
+  const participantCount = await event.countParticipants();
+  await event.update({
+    curAttendees: participantCount,
+  });
+});
+
+EventUser.afterDestroy(async (eventUser) => {
+  const event = await Event.findByPk(eventUser.eventId);
+  const participantCount = await event.countParticipants();
+  await event.update({
+    curAttendees: participantCount,
+  });
 });
 
 // Export modules centeral

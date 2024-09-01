@@ -264,13 +264,11 @@ exports.joinEvent = async (req, res, next) => {
       return next(new Error(`Event is full!!`));
     }
 
-    // 5- Add User to Event and add increase curAttendees by 1
+    // 5- Create EventUser
     await EventUser.create({
       userId: req.user.id,
       eventId: event.id,
     });
-    await event.increment({ curAttendees: 1 });
-
     // Send success response
     res.status(200).json({
       status: `success`,
@@ -299,9 +297,16 @@ exports.leaveEvent = async (req, res, next) => {
     if (!isJoined) {
       return next(new Error(`You are not a participant of this event`));
     }
-    // 3-Remove user from Event and decriese by 1
-    await event.removeParticipant(req.user);
-    await event.increment({ curAttendees: -1 });
+    // 3-Remove user from Event
+    await EventUser.destroy({
+      where: {
+        userId: req.user.id,
+        eventId: event.id,
+      },
+      // This used for update curUser hook
+      individualHooks: true,
+    });
+
     res.status(200).json({
       status: `success`,
       message: `${req.user.username} successfully leave event: ${event.title}`,
