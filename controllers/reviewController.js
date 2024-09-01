@@ -1,6 +1,6 @@
 const { Review, User, Event } = require("../models/index");
 const { sequelize } = require("../database/connection");
-const { Sequelize } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 
 exports.getAllReviews = async (req, res, next) => {
   try {
