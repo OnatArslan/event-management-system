@@ -1,4 +1,11 @@
-const { Event, User, Review, Comment, Categorie } = require("../models/index");
+const {
+  Event,
+  User,
+  Review,
+  Comment,
+  Categorie,
+  EventUser,
+} = require("../models/index");
 const { Op } = require(`sequelize`);
 exports.getAllEvents = async (req, res, next) => {
   try {
@@ -258,7 +265,10 @@ exports.joinEvent = async (req, res, next) => {
     }
 
     // 5- Add User to Event and add increase curAttendees by 1
-    await event.addParticipant(req.user);
+    await EventUser.create({
+      userId: req.user.id,
+      eventId: event.id,
+    });
     await event.increment({ curAttendees: 1 });
 
     // Send success response
