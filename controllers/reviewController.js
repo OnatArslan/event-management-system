@@ -92,6 +92,9 @@ exports.createReview = async (req, res, next) => {
     const { rating, content } = req.body;
     const eventId = req.params.eventId;
     const userId = req.user.id;
+    if (!rating || !eventId) {
+      return next(new Error(`rating or event ID is not given!!!`));
+    }
     const newReview = await Review.create({
       rating,
       content,
