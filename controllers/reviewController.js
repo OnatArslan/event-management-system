@@ -35,27 +35,6 @@ exports.getAllReviews = async (req, res, next) => {
   }
 };
 
-async function calculateRating(eventId) {
-  const event = await Event.findByPk(eventId, {
-    include: {
-      model: Review,
-      as: `eventReviews`,
-      attributes: [],
-    },
-    attributes: {
-      include: [
-        [Sequelize.fn(`AVG`, Sequelize.col(`eventReviews.rating`)), `rating`],
-      ],
-    },
-    group: [`Event.id`],
-  });
-
-  await Event.update(
-    { rating: event.rating },
-    { where: { id: eventId }, validate: true }
-  );
-}
-
 exports.getReview = async (req, res, next) => {
   try {
     const review = await Review.findByPk(req.params.reviewId, {
@@ -104,7 +83,7 @@ exports.createReview = async (req, res, next) => {
     if (!newReview) {
       return next(new Error(`Review can not created!`));
     }
-    calculateRating(eventId);
+
     res.status(200).json({
       status: `success`,
       data: {
@@ -131,7 +110,6 @@ exports.updateReview = async (req, res, next) => {
       content,
     });
 
-    calculateRating(req.params.eventId);
     res.status(200).json({
       status: `success`,
       message: `Review successfully updated`,
@@ -153,7 +131,7 @@ exports.deleteReview = async (req, res, next) => {
     await review.destroy({
       force: true,
     });
-    calculateRating(req.params.eventId);
+
     res.status(200).json({
       status: `success`,
       message: `Review successfully deleted`,
