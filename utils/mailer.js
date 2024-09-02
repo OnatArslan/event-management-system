@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 
+// This is for change passport controller
 const transport = nodemailer.createTransport({
   host: "sandbox.smtp.mailtrap.io",
   port: 2525,
