@@ -85,7 +85,7 @@ exports.signIn = async (req, res, next) => {
 
 exports.logOut = async (req, res, next) => {
   try {
-    // Clear the token cookie
+    // Clear the token cookie for log out process
     res.cookie('token', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
