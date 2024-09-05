@@ -13,7 +13,7 @@ exports.getAllEventComments = async (req, res, next) => {
         },
       });
     } else {
-      comments = await Comment.findAll();
+      return next(new Error(`Event ID is missing`));
     }
     if (!comments) {
       return next(new Error(`Can not find any comments on database`));
