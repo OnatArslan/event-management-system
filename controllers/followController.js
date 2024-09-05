@@ -26,7 +26,7 @@ exports.getFollowers = async (req, res, next) => {
   try {
     // Remember this code block ;)
     const followers = await req.user.getFollowers({
-      attributes: [`username`, `email`],
+      attributes: [`id`, `username`, `email`],
       joinTableAttributes: [],
       through: {
         where: { status: `approved` },
@@ -221,6 +221,10 @@ exports.removeFollower = async (req, res, next) => {
     }
     await friendShip.update({
       status: `rejected`,
+    });
+    res.status(200).json({
+      status: `success`,
+      message: `Follower deleted succesfully`,
     });
   } catch (err) {
     next(err);
