@@ -1,5 +1,5 @@
-const { User } = require("../models/index");
-const jwt = require("jsonwebtoken");
+const { User } = require('../models/index');
+const jwt = require('jsonwebtoken');
 const bcrypt = require(`bcrypt`);
 const transporter = require(`../utils/mailer`);
 
@@ -13,16 +13,13 @@ exports.signUp = async (req, res, next) => {
     if (!username || !email || !password || !passwordConfirmation) {
       return next(new Error(`Missing credentials`));
     }
-    const newUser = await User.create(
-      {
-        username,
-        email,
-        password,
-        passwordConfirmation,
-        profileInfo,
-      },
-      {}
-    );
+    const newUser = await User.create({
+      username,
+      email,
+      password,
+      passwordConfirmation,
+      profileInfo,
+    });
     if (!newUser) {
       return next(new Error(`Can not create user with given credentials`));
     }
@@ -32,7 +29,7 @@ exports.signUp = async (req, res, next) => {
     // Send token via cookie
     res.cookie(`token`, token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
       maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
     });
     // Send response with message
@@ -73,7 +70,7 @@ exports.signIn = async (req, res, next) => {
     // Send token via cookie
     res.cookie(`token`, token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
       maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
     });
 
@@ -89,15 +86,15 @@ exports.signIn = async (req, res, next) => {
 exports.logOut = async (req, res, next) => {
   try {
     // Clear the token cookie
-    res.cookie("token", "", {
+    res.cookie('token', '', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
       expires: new Date(0), // Set the cookie to expire immediately
     });
 
     res.status(200).json({
-      status: "success",
-      message: "Logged out successfully",
+      status: 'success',
+      message: 'Logged out successfully',
     });
   } catch (err) {
     next(err);
@@ -126,7 +123,7 @@ exports.forgotPassword = async (req, res, next) => {
     await user.save({ validate: false });
 
     const resetURL = `${req.protocol}://${req.get(
-      "host"
+      'host'
     )}/api/v1/auth/resetPassword/${plainToken}`;
     const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
 
