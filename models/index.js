@@ -230,6 +230,8 @@ UserFollower.afterUpdate(async (userFollower) => {
       },
     },
   });
+  console.log(`ANANANANANANAANANA SIKIYIM`);
+
   if (!follower || !following) {
     throw new Error(`Can not find user`);
   }
