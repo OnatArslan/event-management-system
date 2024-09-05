@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const { where } = require('sequelize');
 const { User, UserFollower } = require(`../models/index`);
 
 exports.getFollowings = async (req, res, next) => {
@@ -27,7 +27,7 @@ exports.getFollowers = async (req, res, next) => {
     // Remember this code block ;)
     const followers = await req.user.getFollowers({
       attributes: [`username`, `email`],
-      joinTableAttributes: [`status`],
+      joinTableAttributes: [],
       through: {
         where: { status: `approved` },
       },
