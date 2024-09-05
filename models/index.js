@@ -213,9 +213,32 @@ Review.afterDestroy(async (review) => {
   );
 });
 
-UserFollower.afterCreate(async (userFollower) => {
+UserFollower.afterUpdate(async (userFollower) => {
   const follower = await User.findByPk(userFollower.followerId);
+  const followerFollowingCount = await follower.countFollowings({
+    through: {
+      where: {
+        status: `accepted`,
+      },
+    },
+  });
   const following = await User.findByPk(userFollower.followingId);
+  const followingFollowerCount = await following.countFollowers({
+    through: {
+      where: {
+        status: `accepted`,
+      },
+    },
+  });
+  if (!follower || !following) {
+    throw new Error(`Can not find user`);
+  }
+  await follower.update({
+    followingCount: followerFollowingCount,
+  });
+  await following.update({
+    followerCount: followingFollowerCount,
+  });
 });
 
 // Export modules centeral
