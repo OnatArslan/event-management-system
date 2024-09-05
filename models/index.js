@@ -213,6 +213,11 @@ Review.afterDestroy(async (review) => {
   );
 });
 
+UserFollower.afterCreate(async (userFollower) => {
+  const follower = await User.findByPk(userFollower.followerId);
+  const following = await User.findByPk(userFollower.followingId);
+});
+
 // Export modules centeral
 module.exports = {
   User,
