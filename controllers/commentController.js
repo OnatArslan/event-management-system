@@ -1,15 +1,34 @@
-const { Comment } = require(`../models/index`);
+const { Comment, User } = require(`../models/index`);
 const { Op } = require(`sequelize`);
 
 // Controllers for event comments
 exports.getAllEventComments = async (req, res, next) => {
   try {
+    let comments;
     if (req.params.eventId) {
-      const comments = await Comment.findAll({
+      comments = await Comment.findAll({
         where: {
           eventId: req.params.eventId,
           parentCommentId: { [Op.eq]: null },
         },
+        attributes: [`id`, `content`, `createdAt`],
+        include: [
+          {
+            model: User,
+            as: `author`,
+            attributes: [`username`],
+          },
+          {
+            model: Comment,
+            as: `replies`,
+            attributes: [`content`, `createdAt`],
+            include: {
+              model: User,
+              as: `author`,
+              attributes: [`username`],
+            },
+          },
+        ],
       });
     } else {
       return next(new Error(`Event ID is missing`));
