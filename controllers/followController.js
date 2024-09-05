@@ -148,24 +148,6 @@ exports.responseFollowRequest = async (req, res, next) => {
       await followRequest.update({
         status: `approved`,
       });
-      const followerCount = await req.user.countFollowers({
-        through: {
-          where: { status: `approved` },
-        },
-      });
-      const followingCount = await follower.countFollowings({
-        through: {
-          where: { status: `approved` },
-        },
-      });
-      console.log(followingCount);
-
-      await req.user.update({
-        followerCount: followerCount,
-      });
-      await follower.update({
-        followingCount: followingCount,
-      });
     } else {
       followRequest = await UserFollower.findOne({
         where: {
