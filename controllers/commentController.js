@@ -115,14 +115,18 @@ exports.updateCommentOnEvent = async (req, res, next) => {
     const { content } = req.body;
     const userId = req.user.id;
     const eventId = req.params.eventId;
+    if (!eventId) {
+      return next(new Error(`Event id is missing`));
+    }
     const comment = await Comment.findByPk(req.params.commentId, {
       where: { eventId: eventId },
     });
 
     if (!comment) {
-      return next(new Error(`Can not find this comment`));
+      return next(
+        new Error(`Event does not exist or releated event is deleted!!`)
+      );
     }
-
     if (comment.userId !== req.user.id) {
       return next(new Error(`You can only update your comments`));
     }
