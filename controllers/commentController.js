@@ -1,4 +1,4 @@
-const { Comment, User } = require(`../models/index`);
+const { Comment, User, Event } = require(`../models/index`);
 const { Op } = require(`sequelize`);
 
 // Controllers for event comments
@@ -85,11 +85,17 @@ exports.getEventComment = async (req, res, next) => {
 exports.createCommentOnEvent = async (req, res, next) => {
   try {
     const { content } = req.body;
-    const userId = req.user.id;
     const eventId = req.params.eventId;
+    if (!eventId) {
+      return next(new Error(`Event ID is missing`));
+    }
+    const event = await Event.findByPk(eventId);
+    if (!event) {
+      return next(new Error(`Can not find any event with given ID`));
+    }
     const newComment = await Comment.create({
       content,
-      userId,
+      userId: req.user.id,
       eventId,
     });
     if (!newComment) {
@@ -97,7 +103,7 @@ exports.createCommentOnEvent = async (req, res, next) => {
     }
     res.status(200).json({
       status: `success`,
-      data: { newComment },
+      message: `Comment created on event: ${event.title}.`,
     });
   } catch (err) {
     next(err);
