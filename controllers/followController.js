@@ -189,27 +189,11 @@ exports.removeFollowing = async (req, res, next) => {
         new Error(`Can not unfollow because you are not following this user`)
       );
     }
-    const following = await User.findOne({
-      where: { id: req.params.followingId },
-    });
-    await userFollower.destroy({ force: true });
 
-    const followingCount = await req.user.countFollowings({
-      through: {
-        where: { status: `approved` },
-      },
+    await userFollower.update({
+      status: `rejected`,
     });
-    const followerCount = await following.countFollowers({
-      through: {
-        where: { status: `approved` },
-      },
-    });
-    await req.user.update({
-      followingCount: followingCount,
-    });
-    await following.update({
-      followerCount: followerCount,
-    });
+
     res.status(200).json({
       status: `success`,
       message: `User successfully removed from your followings`,
@@ -235,36 +219,9 @@ exports.removeFollower = async (req, res, next) => {
     if (!friendShip) {
       return next(new Error(`Can not find any follower with given ID`));
     }
-    const follower = await User.findOne({
-      where: { id: req.params.followerId },
+    await friendShip.update({
+      status: `rejected`,
     });
-    if (!follower) {
-      return next(new Error(`Can not find any user with given ID`));
-    }
-    try {
-      await req.user.removeFollowers(follower);
-      const followerCount = await req.user.countFollowers({
-        through: {
-          where: { status: `approved` },
-        },
-      });
-      const followingCount = await follower.countFollowings({
-        through: {
-          where: { status: `approved` },
-        },
-      });
-      await req.user.update({
-        followerCount: followerCount,
-      });
-      await follower.update({
-        followingCount: followingCount,
-      });
-      res.status(200).json({
-        message: `User :${follower.username} removed successfully`,
-      });
-    } catch (err) {
-      next(err);
-    }
   } catch (err) {
     next(err);
   }
