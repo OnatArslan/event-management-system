@@ -4,9 +4,8 @@ const { Op } = require(`sequelize`);
 // Controllers for event comments
 exports.getAllEventComments = async (req, res, next) => {
   try {
-    let comments;
     if (req.params.eventId) {
-      comments = await Comment.findAll({
+      const comments = await Comment.findAll({
         where: {
           eventId: req.params.eventId,
           parentCommentId: { [Op.eq]: null },
