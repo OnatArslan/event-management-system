@@ -218,7 +218,7 @@ UserFollower.afterUpdate(async (userFollower) => {
   const followerFollowingCount = await follower.countFollowings({
     through: {
       where: {
-        status: `accepted`,
+        status: `approved`,
       },
     },
   });
@@ -226,7 +226,7 @@ UserFollower.afterUpdate(async (userFollower) => {
   const followingFollowerCount = await following.countFollowers({
     through: {
       where: {
-        status: `accepted`,
+        status: `approved`,
       },
     },
   });

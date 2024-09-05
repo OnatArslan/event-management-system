@@ -1,1 +1,1 @@
-select * from events where categorieId='d07c6fe8-4f8b-4a4d-b92e-eedabfa03c40''
+select * from user_follower
