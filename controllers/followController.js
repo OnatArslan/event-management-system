@@ -224,6 +224,7 @@ exports.removeFollower = async (req, res, next) => {
     await friendShip.update({
       status: `rejected`,
     });
+    // If all that true return response with 200 status code
     res.status(200).json({
       status: `success`,
       message: `Follower deleted succesfully`,
