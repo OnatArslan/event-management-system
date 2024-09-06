@@ -206,6 +206,7 @@ exports.removeFollowing = async (req, res, next) => {
 // This is remove your follower
 exports.removeFollower = async (req, res, next) => {
   try {
+    // Control line
     if (!req.params.followerId) {
       return next(new Error(`Can not find any follower`));
     }
