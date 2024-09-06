@@ -177,6 +177,7 @@ exports.removeFollowing = async (req, res, next) => {
     if (!req.params.followingId) {
       return next(new Error(`user ID do not found`));
     }
+    // Get userFollower data
     const userFollower = await UserFollower.findOne({
       where: {
         followingId: req.params.followingId,
