@@ -229,6 +229,7 @@ exports.removeFollower = async (req, res, next) => {
       status: `success`,
       message: `Follower deleted succesfully`,
     });
+    // If error return next error middleware
   } catch (err) {
     next(err);
   }
