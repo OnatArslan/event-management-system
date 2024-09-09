@@ -221,6 +221,7 @@ exports.removeFollower = async (req, res, next) => {
     if (!friendShip) {
       return next(new Error(`Can not find any follower with given ID`));
     }
+    // Change status of this code
     await friendShip.update({
       status: `rejected`,
     });
