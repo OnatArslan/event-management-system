@@ -194,7 +194,7 @@ exports.removeFollowing = async (req, res, next) => {
     await userFollower.update({
       status: `rejected`,
     });
-
+    // Send rasponse with status 200 OK
     res.status(200).json({
       status: `success`,
       message: `User successfully removed from your followings`,
