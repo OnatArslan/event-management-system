@@ -190,7 +190,7 @@ exports.removeFollowing = async (req, res, next) => {
         new Error(`Can not unfollow because you are not following this user`)
       );
     }
-
+    // await update process
     await userFollower.update({
       status: `rejected`,
     });
